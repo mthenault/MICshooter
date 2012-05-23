@@ -56,6 +56,7 @@ def load_resources(pygame_arg):
 	add_sprite("planet3.png")
 	add_sprite("lifebonus.png")
 	add_sprite("lifeBonusRing.png")
+	add_sprite("lifemask.png")
 	#loading sprite sequences
 	#sprite_explosion_list = sprite_handling.load_sliced_sprites(pygame, 64, 64, "explosion_sheet.png" )
 	add_sprite_sequence("sprite_explosion_list.png", 192, 192)
