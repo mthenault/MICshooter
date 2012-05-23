@@ -29,9 +29,15 @@ def load_resources(pygame_arg):
 	#global pygame = pygame_arg
 	
 	add_sound("laser.wav")
+	add_sound("laser2.wav")
+	add_sound("laser3.wav")
+	add_sound("laser4.wav")
 	add_sound("explosion.wav")
 	add_sound("explosion2.wav")
 	add_sound("life.wav")
+	add_sound("ouch.wav")
+	add_sound("loser.wav")
+	add_sound("shield1.wav")
 	#single_sprites is a dict that contains all the single sprites
 	
 	add_sprite("sprite_ship.png")

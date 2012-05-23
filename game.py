@@ -214,7 +214,10 @@ while thegame:
 	pygame.display.flip()
 
 exitloop = True
+exitcountdown =0
+
 while exitloop:
+	exitcountdown =exitcountdown+ 1
 	clock.tick_busy_loop(30)
 	screen.fill((0,0,0))
 	
@@ -225,13 +228,18 @@ while exitloop:
 	background.blitFog()
 	screen.blit(youlost, (250,250 ))
 	screen.blit(presskey, (300,350 ))
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			sys.exit()
-	if pygame.key.get_pressed()[K_SPACE]:
-		print("exiting")
-		exit()
-		exitloop=False
+	if exitcountdown==30:
+		sounds["loser.wav"].play()
+		
+	if exitcountdown>=30:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				sys.exit()
+		if pygame.key.get_pressed()[K_SPACE]:
+			print("exiting")
+			exit()
+			exitloop=False
+
 	#if pygame.KEYDOWN:
 		#print("exiting")
 		#exit()

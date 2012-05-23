@@ -1,4 +1,4 @@
 MICshooter
 ==========
 
-an old school space shooter coder in python using pygame
+an old school space shooter coded in python using pygame

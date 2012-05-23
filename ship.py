@@ -24,6 +24,7 @@ class Ship():
 	
 	def damage (self, amount):
 		if self.hurt==False:
+			self.sounds["ouch.wav"].play()
 			self.life = self.life-amount
 			self.hurt=True
 			return True #damage has been effectively inflicted	

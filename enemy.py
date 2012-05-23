@@ -66,42 +66,51 @@ class Enemy():
 		#to know when to allow the dead enemy to be purged
 		self.timeofdeath=0
 		
+		#to know if we have to blit the shot sprites
+		self.shot=0
 		
 		
 		
 
 	#are we getting hit ?
 	def processHit(self,laserlist, ship):
-		oldlasers=list()	
-		if (self.dying == False)or self.bonus:
+		oldlasers=list()
+		
+		
+		#is the ship getting the bonus ?	
+		if self.bonus:
+			if collisions.iscollision(ship.position_ship_x, ship.position_ship_y,
+			ship.width, ship.height, self.x, self.y, self.sprite_bonus.get_width(),
+			self.sprite_bonus.get_height()):	
+				ship.getBonusLife()
+				self.bonus=False
+				self.dying=False
+				self.alive=False
+		
+		#is the ship colliding with the enemy ?
+		elif (self.dying == False):
 			#check if we collide with the ship. if we collide both looses life
 			if collisions.iscollision(ship.position_ship_x, ship.position_ship_y,
 			 ship.width, ship.height, self.x, self.y, self.sprite_enemy.get_width(),
 			self.sprite_enemy.get_height()):
-				#normal enemy ship or asteroid
-				if self.bonus==False:
-					if (ship.damage(10)):
-						self.life = self.life-150
-						if self.life<=0:
-							self.dying=True
-							if self.typeofship==0:
-								self.sounds['explosion.wav'].play()
-							else:
-								self.sounds['explosion2.wav'].play()
-								Enemy.nbAsteroids=Enemy.nbAsteroids-1
-								print("dying")
+				if (ship.damage(10)):
+					self.life = self.life-150
+					if self.life<=0:
+						self.dying=True
+						if self.typeofship==0:
+							self.sounds['explosion.wav'].play()
+						else:
+							self.sounds['explosion2.wav'].play()
+							Enemy.nbAsteroids=Enemy.nbAsteroids-1
+							print("dying")
 								
 						#ship.hurt=True
 					ship.position_ship_y=ship.position_ship_y-ship.currentspeed_y
 					ship.position_ship_x= ship.position_ship_x-ship.currentspeed_x
 					ship.currentspeed_x=-ship.currentspeed_x/1.5
 					ship.currentspeed_y=-ship.currentspeed_x/1.5
-				#bonus
-				else:
-					ship.getBonusLife()
-					self.bonus=False
-					self.dying=False
-					self.alive=False
+
+
 					
 				
 			
@@ -111,10 +120,17 @@ class Enemy():
 				if currenty > self.y - self.sprite_enemy.get_height() and \
 				currenty < self.y and \
 				currentx > self.x and currentx < self.x + self.sprite_enemy.get_width():
-					self.dying = True
+					#enemy ship
 					if self.typeofship==0:
-						self.sounds['explosion.wav'].play()
+						self.life=self.life-50
+						if self.life<=0:
+							self.dying=True
+							self.sounds['explosion.wav'].play()
+						else:
+							self.shot=30
+							self.sounds["shield1.wav"].play()
 					else:
+						self.dying = True
 						self.sounds['explosion2.wav'].play()
 						print("dying")
 						Enemy.nbAsteroids=Enemy.nbAsteroids-1
@@ -143,7 +159,13 @@ class Enemy():
 					self.alive = False
 
 		elif self.alive:
-			self.screen.blit(self.sprite_enemy, (self.x, self.y))
+			#if we are being shot, there is alternate blitting for one second
+			if self.shot>0:
+				self.shot=self.shot-1
+				if self.shot%2:
+					self.screen.blit(self.sprite_enemy, (self.x, self.y))
+			else:
+				self.screen.blit(self.sprite_enemy, (self.x, self.y))
 	
 		if self.bonus:
 			self.screen.blit(self.sprite_bonus, (self.x, self.y))
@@ -171,7 +193,7 @@ class Enemy():
 					if self.lasercompteur==0:
 						self.laserlist.append((self.x+self.w/2, self.y+self.h))
 						self.lasercompteur=60
-						self.sounds["laser.wav"].play()
+						self.sounds["laser4.wav"].play()
 						
 					#print(self.lasercompteur)
 					self.lasercompteur=self.lasercompteur-1
