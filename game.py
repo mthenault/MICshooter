@@ -190,14 +190,15 @@ while thegame:
 	
 	# Render the text
 	text = font.render(str(ship.life), True, (255,
-	255, 255))
+	0, 0))
 	
 	# Create a rectangle
 	#textRect = text.get_rect()
 	#show the HUD
-	screen.blit(text, (common_pygame.screenwidth-45,common_pygame.screenheight-235 ))
-	screen.blit(single_sprites['lifemask.png'],(common_pygame.screenwidth-single_sprites['lifemask.png'].get_width(),
-	common_pygame.screenheight-single_sprites['lifemask.png'].get_height()-200 ))
+	screen.blit(single_sprites['lifemask.png'],(0,
+	600-single_sprites['lifemask.png'].get_height() ))
+	screen.blit(text, (common_pygame.screenwidth-70,common_pygame.screenheight-227 ))
+	
 	#if compteur%2== 0:
 		#current_sprite = current_sprite +1
 		#print("current sprite", current_sprite,len(sprite_explosion_list))
