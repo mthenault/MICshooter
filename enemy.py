@@ -34,8 +34,16 @@ class Enemy():
 			self.speed=3	
 			self.sprite_explosion_list = sprite_sequences['sprite_explosion_list_asteroid.png']
 		
+			#if we are going to be a bonus, what bonus will it be ?
+			#0 : health
+			#1 : armor
+			self.bonusType=bool(random.getrandbits(1))
+			if self.bonusType==0:
+				self.sprite_bonus=single_sprites['lifebonus.png']
+			else:
+				self.sprite_bonus=single_sprites['armorbonus.png']
 		self.bonus=False
-		self.sprite_bonus=single_sprites['lifebonus.png']
+		
 			
 		
 		self.alive = True
@@ -71,6 +79,8 @@ class Enemy():
 		
 		
 		
+		
+		
 
 	#are we getting hit ?
 	def processHit(self,laserlist, ship):
@@ -82,7 +92,10 @@ class Enemy():
 			if collisions.iscollision(ship.position_ship_x, ship.position_ship_y,
 			ship.width, ship.height, self.x, self.y, self.sprite_bonus.get_width(),
 			self.sprite_bonus.get_height()):	
-				ship.getBonusLife()
+				if self.bonusType==0:
+					ship.getBonusLife()
+				else:
+					ship.getBonusArmor()
 				self.bonus=False
 				self.dying=False
 				self.alive=False
@@ -125,12 +138,14 @@ class Enemy():
 						self.life=self.life-50
 						if self.life<=0:
 							self.dying=True
+							ship.score=ship.score+10
 							self.sounds['explosion.wav'].play()
 						else:
 							self.shot=30
 							self.sounds["shield1.wav"].play()
 					else:
 						self.dying = True
+						ship.score=ship.score+10
 						self.sounds['explosion2.wav'].play()
 						print("dying")
 						Enemy.nbAsteroids=Enemy.nbAsteroids-1

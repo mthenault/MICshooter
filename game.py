@@ -13,7 +13,8 @@ screen= common_pygame.screen
 clock = common_pygame.clock
 
 # Create a font
-font = pygame.font.Font(None, 32)
+tinyfont = pygame.font.Font(None, 16)
+font = pygame.font.Font(None,32)
 font2 = pygame.font.Font(None, 150)
 
 #dictionnaries that will contain all our needed resources
@@ -71,16 +72,18 @@ nbAsteroids=0
 it=0
 background = background.BackGen(single_sprites)
 thegame=True
+level =1
 while thegame:
 	compteur_shoot=compteur_shoot+1
-	#new enemies every 3 seconds
-	if compteur%(3*60)==0:
-		
-		boolrand = bool(random.getrandbits(1))
-		for i in range(8):
-			enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
-			i*80+30+60*int(boolrand), 0,boolrand , 0))
-		print (enemy_list[0].nbAsteroids)
+	#level 1 : 3 enemies every 3 seconds
+	if level==1:
+		if compteur%(3*60)==0:
+			
+			boolrand = bool(random.getrandbits(1))
+			for i in range(3):
+				enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
+				i*80+250+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand , 0))
+			print (enemy_list[0].nbAsteroids)
 	
 	#new asteroids
 	#if ((len(enemy_list)==0) or enemy_list[0].nbAsteroids<=2) and compteur%150==0:
@@ -185,34 +188,25 @@ while thegame:
 	countdown = ship.processHurt(countdown)
 	
 
-	#screen.blit(single_sprites['backgroundtransp.png'],(0,-600+(compteur%40*15)))
-	#screen.blit(single_sprites['backgroundtransp.png'],(0,compteur%40*15))
-	
 	# Render the text
-	text = font.render(str(ship.life), True, (255,
-	0, 0))
-	
-	# Create a rectangle
-	#textRect = text.get_rect()
+	life_txt = font.render(str(ship.life), True, (255,0, 0))
+	score_txt = font.render(str(ship.score), True, (255,255, 255))
+	armor_txt = font.render(str(ship.armor), True, (255,255, 0))
+	level_txt = tinyfont.render("level " + str(level), True, (255,255, 0))
 	#show the HUD
 	screen.blit(single_sprites['lifemask.png'],(0,
 	600-single_sprites['lifemask.png'].get_height() ))
-	screen.blit(text, (common_pygame.screenwidth-70,common_pygame.screenheight-227 ))
+	#show the life and the score
+	screen.blit(life_txt, (common_pygame.screenwidth-70,common_pygame.screenheight-224 ))
+	screen.blit(score_txt, (350,common_pygame.screenheight-224 ))
+	screen.blit(level_txt, (455,common_pygame.screenheight-215 ))
+	screen.blit(armor_txt, (35,common_pygame.screenheight-227 ))
+	#show the current level
 	
-	#if compteur%2== 0:
-		#current_sprite = current_sprite +1
-		#print("current sprite", current_sprite,len(sprite_explosion_list))
-		
-	#screen.blit(sprite_explosion_list[current_sprite%len(sprite_explosion_list)], (10, 10))
-	#ship.life=0
 	if (ship.life<=0):
 		thegame=False
 		youlost = font2.render("Loser !", True, (255,255, 255))
 		presskey = font.render("press any key to quit", True, (255,255, 255))
-		# Create a rectangle
-		#textRect = youlost.get_rect()
-		#screen.blit(youlost, (250,250 ))
-		#screen.blit(presskey, (300,350 ))
 		
 	pygame.display.flip()
 

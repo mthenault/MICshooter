@@ -20,22 +20,50 @@ class Ship():
 		self.life = 100
 		self.hurt=False
 		self.bonus = False
+		self.bonustype=0
 		self.countdownBonusLife=0
+		
+		#initial score
+		self.score=0
+		
+		#initial armor
+		self.armor=100
 	
 	def damage (self, amount):
 		if self.hurt==False:
-			self.sounds["ouch.wav"].play()
-			self.life = self.life-amount
-			self.hurt=True
-			return True #damage has been effectively inflicted	
+			#if we still have armor available
+			if self.armor>0:
+				self.sounds["shield1.wav"].play()
+				self.armor = self.armor-amount
+				if self.armor<0:
+					self.armor=0
+				self.hurt=True
+				return True
+			#if no more armor, life goes down
+			else:
+				self.sounds["ouch.wav"].play()
+				self.life = self.life-amount
+				self.hurt=True
+				return True #damage has been effectively inflicted	
 		return False #there was no damage
 		
 	def getBonusLife(self):
+		self.score=self.score+5
 		self.sounds["life.wav"].play()
-		self.life = self.life+10
+		if self.life<100:
+			self.life = self.life+10
 		self.bonus=True
+		self.bonustype=0
 		self.countdownBonusLife=0
-		
+	
+	def getBonusArmor(self):
+		self.score=self.score+5
+		self.sounds["armor.wav"].play()
+		if self.armor<100:
+			self.armor = self.armor+10
+		self.bonus=True
+		self.bonustype=1
+		self.countdownBonusLife=0		
 		
 	def processHurt(self,countdown):
 		if self.hurt == True and countdown > 30:
@@ -88,7 +116,10 @@ class Ship():
 		if self.bonus:
 			screen.blit(self.sprite,(self.position_ship_x,self.position_ship_y))
 			if compteur%2==0:
-				screen.blit(self.single_sprites['lifeBonusRing.png'],(self.position_ship_x,self.position_ship_y))
+				if self.bonustype==0:
+					screen.blit(self.single_sprites['lifeBonusRing.png'],(self.position_ship_x,self.position_ship_y))
+				else:
+					screen.blit(self.single_sprites['armorBonusRing.png'],(self.position_ship_x,self.position_ship_y))
 		elif self.hurt:
 			if compteur%2==0:
 				screen.blit(self.sprite,(self.position_ship_x,self.position_ship_y))
