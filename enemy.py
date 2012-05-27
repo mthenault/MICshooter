@@ -129,7 +129,7 @@ class Enemy():
 			
 			#check if we are being shot by a laser
 			for index in range(len(laserlist)):
-				(currentx, currenty) = laserlist[index]
+				(currentx, currenty, lasertype) = laserlist[index]
 				if currenty > self.y - self.sprite_enemy.get_height() and \
 				currenty < self.y and \
 				currentx > self.x and currentx < self.x + self.sprite_enemy.get_width():
@@ -149,7 +149,7 @@ class Enemy():
 						self.sounds['explosion2.wav'].play()
 						print("dying")
 						Enemy.nbAsteroids=Enemy.nbAsteroids-1
-					oldlasers.append((currentx, currenty))
+					oldlasers.append((currentx, currenty, lasertype))
 					
 		return oldlasers
 	

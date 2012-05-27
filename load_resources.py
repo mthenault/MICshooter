@@ -32,6 +32,7 @@ def load_resources(pygame_arg):
 	add_sound("laser2.wav")
 	add_sound("laser3.wav")
 	add_sound("laser4.wav")
+	add_sound("laser5.wav")
 	add_sound("explosion.wav")
 	add_sound("explosion2.wav")
 	add_sound("life.wav")
@@ -39,9 +40,11 @@ def load_resources(pygame_arg):
 	add_sound("loser.wav")
 	add_sound("shield1.wav")
 	add_sound("armor.wav")
+	add_sound("plasma1.wav")
 	#single_sprites is a dict that contains all the single sprites
 	
 	add_sprite("sprite_ship.png")
+	add_sprite("sprite_ship_weapon2.png")
 	add_sprite("sprite_laser.png")
 	add_sprite("sprite_laser_blue.png")
 	add_sprite("sprite_lasershoot.png")
@@ -60,6 +63,7 @@ def load_resources(pygame_arg):
 	add_sprite("lifeBonusRing.png")
 	add_sprite("armorBonusRing.png")
 	add_sprite("lifemask.png")
+	add_sprite("ball1.png")
 	#loading sprite sequences
 	#sprite_explosion_list = sprite_handling.load_sliced_sprites(pygame, 64, 64, "explosion_sheet.png" )
 	add_sprite_sequence("sprite_explosion_list.png", 192, 192)

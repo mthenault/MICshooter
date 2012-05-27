@@ -1,0 +1,28 @@
+shelltitle '$ |michaelSERVEUR:'
+startup_message off
+#caption always '%?%F%{.R.}%?%3n %t%? [%h]%?'
+#caption always '%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<'
+caption always '%{= YK}%-w%{= BW}%50>%n %t%{-}%+w%<'
+
+#termcapinfo xterm* ti@:te@
+bindkey -k k5 prev
+bindkey -k k6 next
+#bindkey -m "^[[1;5A" stuff ^b
+#bindkey -m "^[[1;5B" stuff ^f 
+
+bindkey "^[[1;5D" prev
+bindkey "^[[1;5C" next
+#bindkey "^[[1;5A" time
+#bindkey "^[[1;5B" 
+
+
+
+bindkey "^[[1;5A" eval copy "stuff 5\025"
+bindkey -m "^[[1;5A" stuff 5\025
+
+bindkey "^[[1;5B" eval copy "stuff 5\004"
+bindkey -m "^[[1;5B" stuff 5\004
+
+#screen -t tah ssh root@tah tailf /tmp/tiles.log
+screen
+

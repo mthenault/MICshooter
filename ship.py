@@ -28,6 +28,45 @@ class Ship():
 		
 		#initial armor
 		self.armor=100
+		
+		#initial weapon
+		#1: normal laser
+		#2: plasma balls
+		self.weapon2ammo=0
+		
+	def shoot(self, laserlist, compteur_shoot, laser_width, laser_height, lasershoot):
+	#normal laser
+		if compteur_shoot>7 and self.weapon == 1:
+			self.sounds['laser.wav'].play()
+			laserlist.append( (self.position_ship_x+self.width/2 -laser_width/2 ,
+			self.position_ship_y-laser_height, 1))
+			lasershoot = 7
+			compteur_shoot=0	
+		#plasma balls				
+		elif compteur_shoot>2 and self.weapon == 2:
+			self.weapon2ammo=self.weapon2ammo-1
+			#self.sounds['plasma1.wav'].play()
+			pygame.mixer.Channel(31).play(self.sounds['plasma1.wav'], 0, 0, 0)
+			#print(self.sounds['plasma1.wav'].get_num_channels())
+			#alternative left/right fire
+			if self.weapon2ammo%2:
+				laserlist.append( (self.position_ship_x+self.width/2 -laser_width/2 -35,
+				self.position_ship_y-laser_height+24, 2))
+			else:
+				laserlist.append( (self.position_ship_x+self.width/2 -laser_width/2 +25,
+				self.position_ship_y-laser_height+24, 2))
+			#lasershoot = 7
+			compteur_shoot=0	
+			
+		return (compteur_shoot, laserlist, lasershoot) 
+			
+	def setWeapon (self,  number ):
+		if number==1:
+			self.weapon=1
+			self.sprite=self.single_sprites['sprite_ship.png']
+		else:
+			self.weapon=2
+			self.sprite=self.single_sprites['sprite_ship_weapon2.png']
 	
 	def damage (self, amount):
 		if self.hurt==False:

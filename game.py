@@ -41,6 +41,7 @@ lasershoot = 7
     #pass
 
 ship = ship.Ship(single_sprites, sounds )
+ship.setWeapon(1)
 #ship.height = single_sprites['sprite_ship.png'].get_height() 
 #ship.width =  single_sprites['sprite_ship.png'].get_width() 
 #ship.currentspeed_x =0
@@ -133,14 +134,11 @@ while thegame:
 	elif pygame.key.get_pressed()[K_UP]:
 		ship.currentspeed_y = ship.currentspeed_y -1 	
 	
+	#are we shooting ?
 	if pygame.key.get_pressed()[K_SPACE]:
-		if compteur_shoot>5:
-			sounds['laser.wav'].play()
-			laserlist.append( (ship.position_ship_x+ship.width/2 -laser_width/2 ,
-			ship.position_ship_y-laser_height))
-			lasershoot = 7
-			compteur_shoot=0							
-
+		(compteur_shoot, laserlist, lasershoot) =ship.shoot(laserlist,compteur_shoot, laser_width, laser_height, lasershoot)
+		
+				
 	#update the ships position
 	ship.updatePosition()
 	#blit the right thing
@@ -157,13 +155,20 @@ while thegame:
 	oldLasers = list()	
 	#blit the lasers
 	for index in range(len(laserlist)):
-		(currentx, currenty) = laserlist[index]
+		(currentx, currenty, lasertype) = laserlist[index]
 		if currenty>=-40:
-			screen.blit(single_sprites['sprite_laser.png'],(currentx,currenty))
-			currenty = currenty - 15
-			laserlist[index]=(currentx,currenty)
+			#it's a normal laser
+			if lasertype==1:
+				screen.blit(single_sprites['sprite_laser.png'],(currentx,currenty))
+				currenty = currenty - 15
+			#it's a plasma ball
+			else :
+				screen.blit(single_sprites['ball1.png'],(currentx,currenty))
+				currenty = currenty - 20				
+			
+			laserlist[index]=(currentx,currenty, lasertype)
 		else:
-			oldLasers.append((currentx,currenty))
+			oldLasers.append((currentx,currenty, lasertype))
 	#purge old lasers
 	for index in range(len(oldLasers)):
 		laserlist.remove(oldLasers[index])
