@@ -32,7 +32,8 @@ class Ship():
 		#initial weapon
 		#1: normal laser
 		#2: plasma balls
-		self.weapon2ammo=0
+		self.ammo=0
+		self.weapon=1
 		
 	def shoot(self, laserlist, compteur_shoot, laser_width, laser_height, lasershoot):
 	#normal laser
@@ -44,12 +45,12 @@ class Ship():
 			compteur_shoot=0	
 		#plasma balls				
 		elif compteur_shoot>2 and self.weapon == 2:
-			self.weapon2ammo=self.weapon2ammo-1
+			self.ammo=self.ammo-1
 			#self.sounds['plasma1.wav'].play()
 			pygame.mixer.Channel(31).play(self.sounds['plasma1.wav'], 0, 0, 0)
 			#print(self.sounds['plasma1.wav'].get_num_channels())
 			#alternative left/right fire
-			if self.weapon2ammo%2:
+			if self.ammo%2:
 				laserlist.append( (self.position_ship_x+self.width/2 -laser_width/2 -35,
 				self.position_ship_y-laser_height+24, 2))
 			else:
@@ -67,6 +68,7 @@ class Ship():
 		else:
 			self.weapon=2
 			self.sprite=self.single_sprites['sprite_ship_weapon2.png']
+			self.ammo=100
 	
 	def damage (self, amount):
 		if self.hurt==False:
@@ -150,9 +152,14 @@ class Ship():
 		elif self.bonus == True:
 			self.countdownBonusLife = self.countdownBonusLife+1
 			
+		#switch to the main weapon if the current one is empty
+		if self.ammo<=0:
+			self.setWeapon(1)
+			
 			
 	def blit(self, compteur):
 		if self.bonus:
+			screen.blit(self.single_sprites['lifeBonusLight.png'],(self.position_ship_x-33,self.position_ship_y-32))
 			screen.blit(self.sprite,(self.position_ship_x,self.position_ship_y))
 			if compteur%2==0:
 				if self.bonustype==0:

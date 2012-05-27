@@ -7,15 +7,14 @@ import load_resources
 import random
 import ship
 import background
+import hud
+import bonus
 
 pygame = common_pygame.pygame
 screen= common_pygame.screen
 clock = common_pygame.clock
 
-# Create a font
-tinyfont = pygame.font.Font(None, 16)
-font = pygame.font.Font(None,32)
-font2 = pygame.font.Font(None, 150)
+
 
 #dictionnaries that will contain all our needed resources
 sounds = dict()
@@ -36,12 +35,17 @@ laserlist = list()
 
 lasershoot = 7
 
-##our ship
-#class Ship:
-    #pass
+tinyfont = pygame.font.Font(None, 16)
+font = pygame.font.Font(None,32)
+font2 = pygame.font.Font(None, 150)
 
 ship = ship.Ship(single_sprites, sounds )
 ship.setWeapon(1)
+
+#bonus processing
+scoreBonus=bonus.Bonus(sounds)
+
+hud= hud.Hud(single_sprites)
 #ship.height = single_sprites['sprite_ship.png'].get_height() 
 #ship.width =  single_sprites['sprite_ship.png'].get_width() 
 #ship.currentspeed_x =0
@@ -159,10 +163,12 @@ while thegame:
 		if currenty>=-40:
 			#it's a normal laser
 			if lasertype==1:
+				screen.blit(single_sprites['sprite_laser_light.png'],(currentx-29-32,currenty-22-32))
 				screen.blit(single_sprites['sprite_laser.png'],(currentx,currenty))
 				currenty = currenty - 15
 			#it's a plasma ball
 			else :
+				screen.blit(single_sprites['ball1_light.png'],(currentx-10,currenty-10))
 				screen.blit(single_sprites['ball1.png'],(currentx,currenty))
 				currenty = currenty - 20				
 			
@@ -188,30 +194,19 @@ while thegame:
 	for index in range(len(deadEnemies)):
 		enemy_list.remove(deadEnemies[index])	
 			
-					
+	#blit the hud		
+	hud.blit(ship, level)
+			
 	#process ship hurt
 	countdown = ship.processHurt(countdown)
 	
-
-	# Render the text
-	life_txt = font.render(str(ship.life), True, (255,0, 0))
-	score_txt = font.render(str(ship.score), True, (255,255, 255))
-	armor_txt = font.render(str(ship.armor), True, (255,255, 0))
-	level_txt = tinyfont.render("level " + str(level), True, (255,255, 0))
-	#show the HUD
-	screen.blit(single_sprites['lifemask.png'],(0,
-	600-single_sprites['lifemask.png'].get_height() ))
-	#show the life and the score
-	screen.blit(life_txt, (common_pygame.screenwidth-70,common_pygame.screenheight-224 ))
-	screen.blit(score_txt, (350,common_pygame.screenheight-224 ))
-	screen.blit(level_txt, (455,common_pygame.screenheight-215 ))
-	screen.blit(armor_txt, (35,common_pygame.screenheight-227 ))
-	#show the current level
 	
 	if (ship.life<=0):
 		thegame=False
 		youlost = font2.render("Loser !", True, (255,255, 255))
 		presskey = font.render("press any key to quit", True, (255,255, 255))
+	
+	scoreBonus.ProcessBonus(ship)
 		
 	pygame.display.flip()
 

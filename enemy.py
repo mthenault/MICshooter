@@ -217,6 +217,7 @@ class Enemy():
 					for index in range(len(self.laserlist)):
 						(x, y) = self.laserlist[index]
 						self.laserlist[index]=(x, y+10)
+						self.screen.blit(self.single_sprites['sprite_laser_blue_light.png'],(x-29-32,y-10-22-32))
 						self.screen.blit(self.single_sprites['sprite_laser_blue.png'],(x,y-10))
 						#is the ship getting hit by one of our lasers ?
 						if collisions.iscollision(x, y, 
