@@ -118,10 +118,10 @@ class Enemy():
 							print("dying")
 								
 						#ship.hurt=True
-					ship.position_ship_y=ship.position_ship_y-ship.currentspeed_y
-					ship.position_ship_x= ship.position_ship_x-ship.currentspeed_x
-					ship.currentspeed_x=-ship.currentspeed_x/1.5
-					ship.currentspeed_y=-ship.currentspeed_x/1.5
+				ship.position_ship_y=ship.position_ship_y-ship.currentspeed_y
+				ship.position_ship_x= ship.position_ship_x-ship.currentspeed_x
+				ship.currentspeed_x=-ship.currentspeed_x/1.5
+				ship.currentspeed_y=-ship.currentspeed_x/1.5
 
 
 					

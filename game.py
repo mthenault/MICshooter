@@ -9,6 +9,7 @@ import ship
 import background
 import hud
 import bonus
+import menu
 
 pygame = common_pygame.pygame
 screen= common_pygame.screen
@@ -46,25 +47,18 @@ ship.setWeapon(1)
 scoreBonus=bonus.Bonus(sounds)
 
 hud= hud.Hud(single_sprites)
-#ship.height = single_sprites['sprite_ship.png'].get_height() 
-#ship.width =  single_sprites['sprite_ship.png'].get_width() 
-#ship.currentspeed_x =0
-#ship.currentspeed_y= 0
 
-#ship.position_ship_y = screen.get_height()-ship.height-64
-#ship.position_ship_x = screen.get_width()/2 - ship.width/2
 
-#ship.life = 100
-#ship.hurt=False
+
+
+
 ship_top = screen.get_height()-ship.height
 ship_left = screen.get_width()/2 - ship.width/2
 
 decal_laser_ship_x = (ship.width /2)
 coord_laser_ship_y = -40
 
-#mspawner = Spawner()s
-#list
-#create 10 enemies
+
 enemy_list = list()
 
 compteur = 0
@@ -76,6 +70,12 @@ nbAsteroids=0
 
 it=0
 background = background.BackGen(single_sprites)
+
+#start the menu
+menu=menu.Menu(single_sprites, sounds, background)
+menu.launch(0)
+
+
 thegame=True
 level =1
 while thegame:
@@ -125,6 +125,9 @@ while thegame:
 			#laserlist.append( (ship.position_ship_x+ship.width/2 -laser_width/2 ,
 			#ship.position_ship_y-laser_height))
 			#lasershoot = 7
+	if pygame.key.get_pressed()[K_ESCAPE]:
+		#launch menu with resume option
+		menu.launch(1) 
 					
 	if pygame.key.get_pressed()[K_LEFT]:
 		ship.currentspeed_x = ship.currentspeed_x -1 

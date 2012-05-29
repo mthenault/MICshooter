@@ -72,6 +72,23 @@ def load_resources(pygame_arg):
 	add_sprite("sprite_laser_light.png")
 	add_sprite("ball1_light.png")
 	add_sprite("lifeBonusLight.png")
+	
+	#menu
+	add_sprite("menu_micshooter.png")
+	add_sprite("menu_options.png")
+	add_sprite("menu_optionsblurry.png")
+	add_sprite("menu_play.png")
+	add_sprite("menu_playblurry.png")
+	add_sprite("menu_resume.png")
+	add_sprite("menu_resumeblurry.png")
+	add_sprite("menu_quit.png")
+	add_sprite("menu_quitblurry.png")
+	add_sprite("menu_sound.png")
+	add_sprite("menu_on.png")
+	add_sprite("menu_off.png")
+	add_sprite("menu_resolution.png")
+	add_sprite("menu_800600.png")
+	add_sprite("menu_800500.png")
 	#loading sprite sequences
 	#sprite_explosion_list = sprite_handling.load_sliced_sprites(pygame, 64, 64, "explosion_sheet.png" )
 	add_sprite_sequence("sprite_explosion_list.png", 192, 192)
