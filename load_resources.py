@@ -1,11 +1,13 @@
 import os
 import common_pygame
 import sprite_handling
+import menu
 
 pygame = common_pygame.pygame
 sounds = dict()
 single_sprites = dict()
 sprite_sequences = dict()
+
 
 def add_sound(soundfile):
 	global sounds
@@ -45,11 +47,13 @@ def load_resources(pygame_arg):
 	#single_sprites is a dict that contains all the single sprites
 	
 	add_sprite("sprite_ship.png")
+	add_sprite("sprite_ship_fire.png")
 	add_sprite("sprite_ship_weapon2.png")
 	add_sprite("sprite_laser.png")
 	add_sprite("sprite_laser_blue.png")
 	add_sprite("sprite_lasershoot.png")
 	add_sprite("sprite_enemy.png")
+	add_sprite("sprite_enemy_fire.png")
 	add_sprite("background.png")
 	#add_sprite("stars.png")
 	add_sprite("backgroundtransp.png")

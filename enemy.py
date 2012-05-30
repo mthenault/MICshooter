@@ -7,7 +7,9 @@ class Enemy():
 	
 	whentoshoot = 0
 	nbAsteroids = 0
-	def __init__(self, single_sprites, sprite_sequences,sounds, x, y, movementdirection, typeofship):
+	def __init__(self, single_sprites, sprite_sequences,sounds, x, y, movementdirection, typeofship, menu):
+		self.menu=menu
+		
 		self.x = x
 		self.y = y
 		self.single_sprites=single_sprites
@@ -111,9 +113,9 @@ class Enemy():
 					if self.life<=0:
 						self.dying=True
 						if self.typeofship==0:
-							self.sounds['explosion.wav'].play()
+							self.menu.play_sound(self.sounds['explosion.wav'])
 						else:
-							self.sounds['explosion2.wav'].play()
+							self.menu.play_sound(self.sounds['explosion2.wav'])
 							Enemy.nbAsteroids=Enemy.nbAsteroids-1
 							print("dying")
 								
@@ -139,14 +141,14 @@ class Enemy():
 						if self.life<=0:
 							self.dying=True
 							ship.score=ship.score+10
-							self.sounds['explosion.wav'].play()
+							self.menu.play_sound(self.sounds['explosion.wav'])
 						else:
 							self.shot=30
-							self.sounds["shield1.wav"].play()
+							self.menu.play_sound(self.sounds["shield1.wav"])
 					else:
 						self.dying = True
 						ship.score=ship.score+10
-						self.sounds['explosion2.wav'].play()
+						self.menu.play_sound(self.sounds['explosion2.wav'])
 						print("dying")
 						Enemy.nbAsteroids=Enemy.nbAsteroids-1
 					oldlasers.append((currentx, currenty, lasertype))
@@ -178,8 +180,12 @@ class Enemy():
 			if self.shot>0:
 				self.shot=self.shot-1
 				if self.shot%2:
+					if self.typeofship==0:
+						self.screen.blit(self.single_sprites['sprite_enemy_fire.png'], (self.x, self.y-20))
 					self.screen.blit(self.sprite_enemy, (self.x, self.y))
 			else:
+				if self.typeofship==0:
+					self.screen.blit(self.single_sprites['sprite_enemy_fire.png'], (self.x, self.y-20))
 				self.screen.blit(self.sprite_enemy, (self.x, self.y))
 	
 		if self.bonus:
@@ -208,7 +214,7 @@ class Enemy():
 					if self.lasercompteur==0:
 						self.laserlist.append((self.x+self.w/2, self.y+self.h))
 						self.lasercompteur=60
-						self.sounds["laser4.wav"].play()
+						self.menu.play_sound(self.sounds["laser4.wav"])
 						
 					#print(self.lasercompteur)
 					self.lasercompteur=self.lasercompteur-1

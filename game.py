@@ -40,17 +40,22 @@ tinyfont = pygame.font.Font(None, 16)
 font = pygame.font.Font(None,32)
 font2 = pygame.font.Font(None, 150)
 
-ship = ship.Ship(single_sprites, sounds )
-ship.setWeapon(1)
+background = background.BackGen(single_sprites)
 
-#bonus processing
-scoreBonus=bonus.Bonus(sounds)
+
+
+
+
+
 
 hud= hud.Hud(single_sprites)
+#start the menu
+menu=menu.Menu(single_sprites, sounds, background, hud)
+menu.launch(0)
 
 
-
-
+ship = ship.Ship(single_sprites, sounds, menu )
+ship.setWeapon(1)
 
 ship_top = screen.get_height()-ship.height
 ship_left = screen.get_width()/2 - ship.width/2
@@ -69,17 +74,20 @@ nbAsteroids=0
 #current_sprite=0
 
 it=0
-background = background.BackGen(single_sprites)
 
-#start the menu
-menu=menu.Menu(single_sprites, sounds, background)
-menu.launch(0)
+#bonus processing
+scoreBonus=bonus.Bonus(sounds, menu)
+
 
 
 thegame=True
-level =1
+level =0
 while thegame:
 	compteur_shoot=compteur_shoot+1
+	
+	#every 2 minutes, level up
+	if compteur%(30*60)==0:
+		level=level+1
 	#level 1 : 3 enemies every 3 seconds
 	if level==1:
 		if compteur%(3*60)==0:
@@ -87,15 +95,31 @@ while thegame:
 			boolrand = bool(random.getrandbits(1))
 			for i in range(3):
 				enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
-				i*80+250+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand , 0))
+				i*80+250+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand , 0, menu))
 			print (enemy_list[0].nbAsteroids)
-	
+	if level==2:
+		if compteur%(2*60)==0:
+			
+			boolrand = bool(random.getrandbits(1))
+			for i in range(6):
+				enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
+				i*80+190+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand , 0, menu))
+			print (enemy_list[0].nbAsteroids)
+	if level==3:
+		if compteur%(1*60)==0:
+			
+			boolrand = bool(random.getrandbits(1))
+			for i in range(9):
+				enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
+				i*80+80+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand , 0, menu))
+			print (enemy_list[0].nbAsteroids)
+			
 	#new asteroids
 	#if ((len(enemy_list)==0) or enemy_list[0].nbAsteroids<=2) and compteur%150==0:
 	if compteur%150==0:
 		boolrand = bool(random.getrandbits(1))
 		enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
-			random.randrange(0, screen.get_width()), -32,boolrand , 1))
+			random.randrange(0, screen.get_width()), -32,boolrand , 1, menu))
 		enemy_list[0].nbAsteroids=enemy_list[0].nbAsteroids+1
 		#if (len(enemy_list)>=0):
 			#print(
@@ -202,13 +226,12 @@ while thegame:
 			
 	#process ship hurt
 	countdown = ship.processHurt(countdown)
-	
-	
+
 	if (ship.life<=0):
 		thegame=False
-		youlost = font2.render("Loser !", True, (255,255, 255))
+		youlost = font2.render("Game over", True, (255,255, 255))
 		presskey = font.render("press any key to quit", True, (255,255, 255))
-	
+		yourscore = font.render("Your score : "+ str(ship.score), True, (255,255, 255))
 	scoreBonus.ProcessBonus(ship)
 		
 	pygame.display.flip()
@@ -226,10 +249,12 @@ while exitloop:
 	background.blitPlanets()
 	#show the fog
 	background.blitFog()
-	screen.blit(youlost, (250,250 ))
-	screen.blit(presskey, (300,350 ))
+	screen.blit(youlost, (150,50 ))
+	screen.blit(yourscore, (250,180 ))
+	screen.blit(presskey, (300,450 ))
+	
 	if exitcountdown==30:
-		sounds["loser.wav"].play()
+		menu.play_sound(sounds["loser.wav"])
 		
 	if exitcountdown>=30:
 		for event in pygame.event.get():

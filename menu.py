@@ -5,15 +5,19 @@ import os
 import common_pygame
 import pygame, sys, pygame.mixer
 from pygame.locals import *
-
+import pickle
 pygame = common_pygame.pygame
 screen= common_pygame.screen
 clock = common_pygame.clock
 
 class Menu():
 	
+	def play_sound(self, sound):
+		if self.config['sound']:
+			sound.play()
+		
 	
-	def __init__(self, single_sprites, sounds, background):
+	def __init__(self, single_sprites, sounds, background, hud):
 		self.single_sprites=single_sprites
 		self.sounds=sounds
 		self.background=background
@@ -26,7 +30,31 @@ class Menu():
 		#0: main menu
 		#1: option menu
 		self.menuStatus=0
+		self.font = pygame.font.Font(None,32)
+		self.config={}
+		self.hud=hud
 		
+		if os.path.exists(os.path.join('data','config.conf')):
+			with open(os.path.join('data','config.conf'), 'rb') as fichier:
+				depickler = pickle.Unpickler(fichier)
+				self.config= depickler.load()
+		else:
+			self.config = {
+			"sound" : 1,
+			"resolution" : 0}
+		
+		
+		if self.config['resolution']==0:
+			common_pygame.pygame.display.set_mode((800,600))
+			self.hud.offset=0
+		else:
+			common_pygame.pygame.display.set_mode((800,500))
+			self.hud.offset=100
+								
+							
+		#self.sound=1
+		##0:800600, 1: 800500
+		#self.resolution=0
 		
 		
 	#start the menu
@@ -53,35 +81,36 @@ class Menu():
 			self.compteur=self.compteur+1
 
 
-		
+			#change the selection
+			if pygame.key.get_pressed()[pygame.K_UP]:
+				if self.compteur>=5:
+					#print(self.selection)
+					self.selection=self.selection-1
+					if self.selection==0:
+						self.selection=3
+					self.compteur=0
+					
+			if pygame.key.get_pressed()[pygame.K_DOWN] and self.compteur>=5:
+				#print(self.selection)
+				self.selection=self.selection+1
+				if self.selection==4:
+					self.selection=1
+				self.compteur=0
 			
 			
 			
 			if self.menuStatus==0:
-				#change the selection
-				if pygame.key.get_pressed()[pygame.K_UP]:
-					if self.compteur>=5:
-						#print(self.selection)
-						self.selection=self.selection-1
-						if self.selection==0:
-							self.selection=3
+				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==1 and self.compteur>=5:
 						self.compteur=0
-						
-				if pygame.key.get_pressed()[pygame.K_DOWN] and self.compteur>=5:
-					#print(self.selection)
-					self.selection=self.selection+1
-					if self.selection==4:
-						self.selection=1
-					self.compteur=0
-				
-				
-				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==1:
 						return 
 						
-				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==3:
+				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==3 and self.compteur>=5:
+						self.compteur=0
 						exit()
 						
-				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==2:
+				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==2 and self.compteur>=5:
+						self.compteur=0
+						self.selection=1
 						self.menuStatus=1
 				#print the menu accordingly to the selection and the menu state
 										
@@ -126,8 +155,62 @@ class Menu():
 					screen.blit(self.single_sprites['menu_quit.png'],(270-decalx,200+(2*space)-decaly))
 	
 			elif self.menuStatus==1:
-				screen.blit(self.single_sprites['menu_sound.png'],(270,200))
+
+				if (pygame.key.get_pressed()[pygame.K_LEFT] or pygame.key.get_pressed()[pygame.K_RIGHT]) \
+				and self.selection==1 and self.compteur>=5:
+						self.compteur=0
+						self.config['sound']= not self.config['sound']
+						
+				if (pygame.key.get_pressed()[pygame.K_LEFT] or pygame.key.get_pressed()[pygame.K_RIGHT]) \
+				and self.selection==2 and self.compteur>=5:
+						self.compteur=0
+						self.config['resolution']= not self.config['resolution']
+						if self.config['resolution']==0:
+							self.hud.offset=0
+							common_pygame.pygame.display.set_mode((800,600))
+						else:
+							self.hud.offset=100
+							common_pygame.pygame.display.set_mode((800,500))
+						
+				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==3:
+					#write the config into the file
+					with open(os.path.join('data','config.conf'), 'wb') as fichier:
+						mon_pickler = pickle.Pickler(fichier)
+						mon_pickler.dump(self.config)
+						
+						self.compteur=0
+						self.selection=1
+						self.menuStatus=0
 				
+				
+				if self.config['sound']:
+					if self.selection==1:
+						screen.blit(self.font.render("Sound : on", True, (255,0, 0)),(350,200))
+					else:
+						screen.blit(self.font.render("Sound : on", True, (255,255, 255)),(350,200))
+				else:
+					if self.selection==1:
+						screen.blit(self.font.render("Sound : off", True, (255,0, 0)),(350,200))
+					else:
+						screen.blit(self.font.render("Sound : off", True, (255,255, 255)),(350,200))
+				
+				
+				if self.config['resolution']==0:
+					if self.selection==2:
+						screen.blit(self.font.render("Resolution : 800*600", True, (255,0, 0)),(350,250))
+					else:
+						screen.blit(self.font.render("Resolution : 800*600", True, (255,255, 255)),(350,250))
+				else:
+					if self.selection==2:
+						screen.blit(self.font.render("Resolution : 800*500", True, (255,0, 0)),(350,250))
+					else:
+						screen.blit(self.font.render("Resolution : 800*500", True, (255,255, 255)),(350,250))
+				
+				if self.selection==3:
+					screen.blit(self.font.render("go back", True, (255,0, 0)),(350,300))
+				else:
+					screen.blit(self.font.render("go back", True, (255,255, 255)),(350,300))
+					
 				if pygame.key.get_pressed()[K_ESCAPE]:
 					self.menuStatus=0
 	

@@ -1,12 +1,14 @@
 import os
 import common_pygame
+import load_resources
 pygame = common_pygame.pygame
 screen= common_pygame.screen
 
 class Ship():
 	
 	
-	def __init__(self, single_sprites, sounds):
+	def __init__(self, single_sprites, sounds, menu):
+		self.menu=menu
 		self.sounds=sounds
 		self.sprite=  single_sprites['sprite_ship.png']
 		self.single_sprites = single_sprites
@@ -38,7 +40,8 @@ class Ship():
 	def shoot(self, laserlist, compteur_shoot, laser_width, laser_height, lasershoot):
 	#normal laser
 		if compteur_shoot>7 and self.weapon == 1:
-			self.sounds['laser.wav'].play()
+			self.menu.play_sound(self.sounds['laser.wav'])
+			#self.sounds['laser.wav'].play()
 			laserlist.append( (self.position_ship_x+self.width/2 -laser_width/2 ,
 			self.position_ship_y-laser_height, 1))
 			lasershoot = 7
@@ -46,9 +49,10 @@ class Ship():
 		#plasma balls				
 		elif compteur_shoot>2 and self.weapon == 2:
 			self.ammo=self.ammo-1
-			#self.sounds['plasma1.wav'].play()
-			pygame.mixer.Channel(31).play(self.sounds['plasma1.wav'], 0, 0, 0)
-			#print(self.sounds['plasma1.wav'].get_num_channels())
+			
+			self.menu.play_sound(self.sounds['plasma1.wav'])
+			#pygame.mixer.Channel(31).play(self.sounds['plasma1.wav'], 0, 0, 0)
+			
 			#alternative left/right fire
 			if self.ammo%2:
 				laserlist.append( (self.position_ship_x+self.width/2 -laser_width/2 -35,
@@ -74,7 +78,7 @@ class Ship():
 		if self.hurt==False:
 			#if we still have armor available
 			if self.armor>0:
-				self.sounds["shield1.wav"].play()
+				self.menu.play_sound(self.sounds["shield1.wav"])
 				self.armor = self.armor-amount
 				if self.armor<0:
 					self.armor=0
@@ -82,7 +86,7 @@ class Ship():
 				return True
 			#if no more armor, life goes down
 			else:
-				self.sounds["ouch.wav"].play()
+				self.menu.play_sound(self.sounds["ouch.wav"])
 				self.life = self.life-amount
 				self.hurt=True
 				return True #damage has been effectively inflicted	
@@ -90,7 +94,7 @@ class Ship():
 		
 	def getBonusLife(self):
 		self.score=self.score+5
-		self.sounds["life.wav"].play()
+		self.menu.play_sound(self.sounds["life.wav"])
 		if self.life<100:
 			self.life = self.life+10
 		self.bonus=True
@@ -99,7 +103,7 @@ class Ship():
 	
 	def getBonusArmor(self):
 		self.score=self.score+5
-		self.sounds["armor.wav"].play()
+		self.menu.play_sound(self.sounds["armor.wav"])
 		if self.armor<100:
 			self.armor = self.armor+10
 		self.bonus=True
@@ -168,8 +172,10 @@ class Ship():
 					screen.blit(self.single_sprites['armorBonusRing.png'],(self.position_ship_x,self.position_ship_y))
 		elif self.hurt:
 			if compteur%2==0:
+				screen.blit(self.single_sprites['sprite_ship_fire.png'],(self.position_ship_x,self.position_ship_y+61))
 				screen.blit(self.sprite,(self.position_ship_x,self.position_ship_y))
 		#el
 		else:
+			screen.blit(self.single_sprites['sprite_ship_fire.png'],(self.position_ship_x,self.position_ship_y+61))
 			screen.blit(self.sprite,(self.position_ship_x,self.position_ship_y))
 	
