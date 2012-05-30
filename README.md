@@ -1,5 +1,6 @@
 MICshooter
 ==========
 
-an old school space shooter coded in python using pygame
-see the wiki for screenshots
+An old school space shooter coded in python using pygame.
+
+Take a look at the wiki for screenshots.
