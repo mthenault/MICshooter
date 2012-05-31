@@ -181,11 +181,11 @@ class Enemy():
 				self.shot=self.shot-1
 				if self.shot%2:
 					if self.typeofship==0:
-						self.screen.blit(self.single_sprites['sprite_enemy_fire.png'], (self.x, self.y-20))
+						self.screen.blit(self.single_sprites['sprite_enemy_fire.png'], (self.x, self.y-15))
 					self.screen.blit(self.sprite_enemy, (self.x, self.y))
 			else:
 				if self.typeofship==0:
-					self.screen.blit(self.single_sprites['sprite_enemy_fire.png'], (self.x, self.y-20))
+					self.screen.blit(self.single_sprites['sprite_enemy_fire.png'], (self.x, self.y-15))
 				self.screen.blit(self.sprite_enemy, (self.x, self.y))
 	
 		if self.bonus:
