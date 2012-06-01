@@ -14,10 +14,10 @@ def load_sliced_sprites(w, h, filename):
 
 	columns = master_width/w
 	rows =master_height/h
-	print(master_width, master_height, columns, rows)
+	#print(master_width, master_height, columns, rows)
 	for i in xrange (rows):
 		for j in xrange (columns):
-			print(j*w,i*h,w,h)
+			#print(j*w,i*h,w,h)
 			cursurf = master_image.subsurface((j*w,i*h,w,h))
 			cursurf.set_colorkey((255,0,255))
 			images.append(cursurf)

@@ -16,8 +16,24 @@ class Menu():
 		if self.config['sound']:
 			sound.play()
 		
+	def __init__ (self):
+		self.config={}
+		if os.path.exists(os.path.join('data','config.conf')):
+			with open(os.path.join('data','config.conf'), 'rb') as fichier:
+				depickler = pickle.Unpickler(fichier)
+				self.config= depickler.load()
+		else:
+			self.config = {
+			"sound" : 1,
+			"resolution" : 0}
+		
+		
+		if self.config['resolution']==0:
+			common_pygame.pygame.display.set_mode((800,600))
+		else:
+			common_pygame.pygame.display.set_mode((800,500))
 	
-	def __init__(self, single_sprites, sounds, background, hud):
+	def init2(self, single_sprites, sounds, background, hud):
 		self.single_sprites=single_sprites
 		self.sounds=sounds
 		self.background=background
@@ -31,25 +47,14 @@ class Menu():
 		#1: option menu
 		self.menuStatus=0
 		self.font = pygame.font.Font(None,32)
-		self.config={}
+		#self.config={}
 		self.hud=hud
-		
-		if os.path.exists(os.path.join('data','config.conf')):
-			with open(os.path.join('data','config.conf'), 'rb') as fichier:
-				depickler = pickle.Unpickler(fichier)
-				self.config= depickler.load()
-		else:
-			self.config = {
-			"sound" : 1,
-			"resolution" : 0}
-		
-		
 		if self.config['resolution']==0:
-			common_pygame.pygame.display.set_mode((800,600))
 			self.hud.offset=0
 		else:
-			common_pygame.pygame.display.set_mode((800,500))
 			self.hud.offset=100
+		
+
 								
 							
 		#self.sound=1

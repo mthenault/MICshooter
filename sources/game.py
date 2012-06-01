@@ -22,6 +22,10 @@ sounds = dict()
 single_sprites = dict()
 sprite_sequences = dict()
 
+#create the menu ( we create it here in order to let the menu object read the configuration,
+#to set the correct screen size
+
+menu=menu.Menu()
 #fill up our dictionnaries
 (sounds, single_sprites, sprite_sequences) = load_resources.load_resources(pygame)
 
@@ -50,7 +54,7 @@ background = background.BackGen(single_sprites)
 
 hud= hud.Hud(single_sprites)
 #start the menu
-menu=menu.Menu(single_sprites, sounds, background, hud)
+menu.init2(single_sprites, sounds, background, hud)
 menu.launch(0)
 
 

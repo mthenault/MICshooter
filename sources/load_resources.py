@@ -2,6 +2,7 @@ import os
 import common_pygame
 import sprite_handling
 import menu
+import progressbar
 
 pygame = common_pygame.pygame
 sounds = dict()
@@ -26,76 +27,40 @@ def add_sprite_sequence(spritesequence, h, w):
 	sprite_handling.load_sliced_sprites( w, h, spritesequence )
 
 def load_resources(pygame_arg):
+	prog = progressbar.progressBar()
 	#loading sounds
 	#sounds is a dict that contains all the sounds
 	#global pygame = pygame_arg
+	prog.update(0)
+	soundlist=["laser.wav", "laser2.wav", "laser3.wav", "laser4.wav","laser5.wav", \
+	 "explosion.wav", "explosion2.wav", "life.wav", "ouch.wav", "loser.wav", "shield1.wav", \
+	 "armor.wav", "plasma1.wav", "plasmagun.wav"]
+	 
+	for index in xrange (len(soundlist)):
+		 add_sound(soundlist[index])
+		 prog.update(index*40/len(soundlist))
 	
-	add_sound("laser.wav")
-	add_sound("laser2.wav")
-	add_sound("laser3.wav")
-	add_sound("laser4.wav")
-	add_sound("laser5.wav")
-	add_sound("explosion.wav")
-	add_sound("explosion2.wav")
-	add_sound("life.wav")
-	add_sound("ouch.wav")
-	add_sound("loser.wav")
-	add_sound("shield1.wav")
-	add_sound("armor.wav")
-	add_sound("plasma1.wav")
-	add_sound("plasmagun.wav")
-	#single_sprites is a dict that contains all the single sprites
+	sprite_load_list=["sprite_ship.png","sprite_ship_fire.png",  "sprite_ship_weapon2.png", \
+	"sprite_laser.png", "sprite_laser_blue.png", "sprite_lasershoot.png","sprite_enemy.png", \
+	"sprite_enemy_fire.png", "background.png","backgroundtransp.png", "asteroid1.png", \
+	 "asteroid2.png", "asteroid3.png", "planet1.png", "planet2.png", "planet3.png", \
+	 "lifebonus.png", "armorbonus.png", "lifeBonusRing.png", "armorBonusRing.png", \
+	 "lifemask.png", "ball1.png", "sprite_laser_blue_light.png","sprite_laser_light.png", \
+	  "ball1_light.png","lifeBonusLight.png","menu_micshooter.png", "menu_options.png",
+	 "menu_optionsblurry.png", "menu_play.png","menu_playblurry.png","menu_resume.png", \
+	  "menu_resumeblurry.png",  "menu_quit.png", "menu_quitblurry.png","menu_sound.png", \
+	   "menu_on.png", "menu_off.png","menu_resolution.png","menu_800600.png", "menu_800500.png"      ]
 	
-	add_sprite("sprite_ship.png")
-	add_sprite("sprite_ship_fire.png")
-	add_sprite("sprite_ship_weapon2.png")
-	add_sprite("sprite_laser.png")
-	add_sprite("sprite_laser_blue.png")
-	add_sprite("sprite_lasershoot.png")
-	add_sprite("sprite_enemy.png")
-	add_sprite("sprite_enemy_fire.png")
-	add_sprite("background.png")
-	#add_sprite("stars.png")
-	add_sprite("backgroundtransp.png")
-	add_sprite("asteroid1.png")
-	add_sprite("asteroid2.png")
-	add_sprite("asteroid3.png")
-	add_sprite("planet1.png")
-	add_sprite("planet2.png")
-	add_sprite("planet3.png")
-	add_sprite("lifebonus.png")
-	add_sprite("armorbonus.png")
-	add_sprite("lifeBonusRing.png")
-	add_sprite("armorBonusRing.png")
-	add_sprite("lifemask.png")
-	add_sprite("ball1.png")
+	for index in xrange (len(sprite_load_list)):
+		 add_sprite(sprite_load_list[index])
+		 prog.update((index*60/len(sprite_load_list))+40)
 	
 	
-	#light
-	add_sprite("sprite_laser_blue_light.png")
-	add_sprite("sprite_laser_light.png")
-	add_sprite("ball1_light.png")
-	add_sprite("lifeBonusLight.png")
 	
-	#menu
-	add_sprite("menu_micshooter.png")
-	add_sprite("menu_options.png")
-	add_sprite("menu_optionsblurry.png")
-	add_sprite("menu_play.png")
-	add_sprite("menu_playblurry.png")
-	add_sprite("menu_resume.png")
-	add_sprite("menu_resumeblurry.png")
-	add_sprite("menu_quit.png")
-	add_sprite("menu_quitblurry.png")
-	add_sprite("menu_sound.png")
-	add_sprite("menu_on.png")
-	add_sprite("menu_off.png")
-	add_sprite("menu_resolution.png")
-	add_sprite("menu_800600.png")
-	add_sprite("menu_800500.png")
 	#loading sprite sequences
 	#sprite_explosion_list = sprite_handling.load_sliced_sprites(pygame, 64, 64, "explosion_sheet.png" )
 	add_sprite_sequence("sprite_explosion_list.png", 192, 192)
 	add_sprite_sequence("sprite_explosion_list_asteroid.png", 192, 192)
+	prog.update(100)
 	return (sounds, single_sprites, sprite_sequences)
 
