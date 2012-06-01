@@ -55,7 +55,7 @@ def load_resources(pygame_arg):
 		 add_sprite(sprite_load_list[index])
 		 prog.update((index*60/len(sprite_load_list))+40)
 	
-	
+	pygame.display.set_icon(single_sprites["sprite_ship.png"])
 	
 	#loading sprite sequences
 	#sprite_explosion_list = sprite_handling.load_sliced_sprites(pygame, 64, 64, "explosion_sheet.png" )

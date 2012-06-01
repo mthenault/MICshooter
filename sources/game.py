@@ -148,6 +148,10 @@ while thegame:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			sys.exit()
+		#if event.type == pygame.KEYUP:
+			#if event.key == pygame.K_UP:
+				#ship.currentspeed_x =0
+				#ship.currentspeed_y =0
 		#elif event.type == MOUSEBUTTONDOWN:
 			#sounds['laser.wav'].play()
 			#laserlist.append( (ship.position_ship_x+ship.width/2 -laser_width/2 ,
@@ -168,6 +172,7 @@ while thegame:
 		ship.currentspeed_y = ship.currentspeed_y +1 
 	elif pygame.key.get_pressed()[K_UP]:
 		ship.currentspeed_y = ship.currentspeed_y -1 	
+	
 	
 	#are we shooting ?
 	if pygame.key.get_pressed()[K_SPACE]:
