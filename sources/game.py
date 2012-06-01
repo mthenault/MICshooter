@@ -10,6 +10,7 @@ import background
 import hud
 import bonus
 import menu
+import effects
 
 pygame = common_pygame.pygame
 screen= common_pygame.screen
@@ -86,6 +87,7 @@ scoreBonus=bonus.Bonus(sounds, menu)
 
 thegame=True
 level =0
+
 while thegame:
 	compteur_shoot=compteur_shoot+1
 	
@@ -241,8 +243,17 @@ while thegame:
 		youlost = font2.render("Game over", True, (255,255, 255))
 		presskey = font.render("press any key to quit", True, (255,255, 255))
 		yourscore = font.render("Your score : "+ str(ship.score), True, (255,255, 255))
+		
+		#play a the explosion sound
+		menu.play_sound(sounds['explosion2.wav'])
+		#blit the explosion
+		screen.blit(sprite_sequences['sprite_explosion_list_asteroid.png'][3],\
+		 (ship.position_ship_x-64,ship.position_ship_y-64))
+		#fade to red
+		effects.fadeToColor(255, 0, 0)
 	scoreBonus.ProcessBonus(ship)
 		
+	
 	pygame.display.flip()
 
 exitloop = True

@@ -6,6 +6,7 @@ import common_pygame
 import pygame, sys, pygame.mixer
 from pygame.locals import *
 import pickle
+import effects
 pygame = common_pygame.pygame
 screen= common_pygame.screen
 clock = common_pygame.clock
@@ -68,6 +69,8 @@ class Menu():
 		decaly=0
 		decalx=-150
 		space=120
+		
+		firstRound=True
 		while(True):
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
@@ -107,6 +110,7 @@ class Menu():
 			if self.menuStatus==0:
 				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==1 and self.compteur>=5:
 						self.compteur=0
+						effects.fadeToColor(0, 0, 0)
 						return 
 						
 				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==3 and self.compteur>=5:

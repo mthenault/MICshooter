@@ -34,6 +34,7 @@ class Ship():
 		#initial weapon
 		#1: normal laser
 		#2: plasma balls
+		#3: death ray
 		self.ammo=0
 		self.weapon=1
 		
@@ -62,6 +63,9 @@ class Ship():
 				self.position_ship_y-laser_height+24, 2))
 			#lasershoot = 7
 			compteur_shoot=0	
+		#death ray
+		elif compteur_shoot>2 and self.weapon == 3:
+			self.ammo=self.ammo-1
 			
 		return (compteur_shoot, laserlist, lasershoot) 
 			
@@ -69,8 +73,12 @@ class Ship():
 		if number==1:
 			self.weapon=1
 			self.sprite=self.single_sprites['sprite_ship.png']
-		else:
+		elif number ==2:
 			self.weapon=2
+			self.sprite=self.single_sprites['sprite_ship_weapon2.png']
+			self.ammo=100
+		else:
+			self.weapon=3
 			self.sprite=self.single_sprites['sprite_ship_weapon2.png']
 			self.ammo=100
 	
