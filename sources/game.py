@@ -96,10 +96,10 @@ while thegame:
 		level=level+1
 	#level 1 : 3 enemies every 3 seconds
 	if level==1:
-		if compteur%(3*60)==0:
+		if compteur%(3*20)==0:
 			
 			boolrand = bool(random.getrandbits(1))
-			for i in range(3):
+			for i in range(1):
 				enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
 				i*80+250+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand , 0, menu))
 			print (enemy_list[0].nbAsteroids)
@@ -142,18 +142,12 @@ while thegame:
 	background.blitPlanets()
 		#show the fog
 	background.blitFog()
-	#screen.blit(single_sprites['background.png'],(0,-600+(compteur%150*4)))
-	#screen.blit(single_sprites['background.png'],(0,compteur%150*4))
 
 	
 	mouse_x,mouse_y=pygame.mouse.get_pos()
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			sys.exit()
-		#if event.type == pygame.KEYUP:
-			#if event.key == pygame.K_UP:
-				#ship.currentspeed_x =0
-				#ship.currentspeed_y =0
 		#elif event.type == MOUSEBUTTONDOWN:
 			#sounds['laser.wav'].play()
 			#laserlist.append( (ship.position_ship_x+ship.width/2 -laser_width/2 ,
@@ -163,8 +157,6 @@ while thegame:
 		#launch menu with resume option
 		menu.launch(1) 				
 	if pygame.key.get_pressed()[K_LEFT]:
-		#if ship.currentspeed_x>0 and ship.currentspeed_x <5
-		#ship.currentspeed_x = ship.currentspeed_x -1 
 		if ship.currentspeed_x >=0:
 			ship.currentspeed_x = -5
 		if ship.currentspeed_x > -20:
@@ -175,19 +167,16 @@ while thegame:
 			ship.currentspeed_x = 5
 		if ship.currentspeed_x < 20:
 			ship.currentspeed_x = ship.currentspeed_x +1
-		#ship.currentspeed_x = ship.currentspeed_x +1 		
 	if pygame.key.get_pressed()[K_DOWN]:
 		if ship.currentspeed_y <= 0:
 			ship.currentspeed_y = 5
 		if ship.currentspeed_y < 20:
 			ship.currentspeed_y = ship.currentspeed_y +1
-		#ship.currentspeed_y = ship.currentspeed_y +1 
 	elif pygame.key.get_pressed()[K_UP]:
 		if ship.currentspeed_y >= 0:
 			ship.currentspeed_y = -5
 		if ship.currentspeed_y > -20:
 			ship.currentspeed_y = ship.currentspeed_y -1
-		#ship.currentspeed_y = ship.currentspeed_y -1 
 	
 	if 	pygame.key.get_pressed()[K_LEFT] ==0 and pygame.key.get_pressed()[K_RIGHT]==0 \
 	and pygame.key.get_pressed()[K_UP] ==0 and pygame.key.get_pressed()[K_DOWN]==0:

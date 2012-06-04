@@ -49,7 +49,8 @@ def load_resources(pygame_arg):
 	  "ball1_light.png","lifeBonusLight.png","menu_micshooter.png", "menu_options.png",
 	 "menu_optionsblurry.png", "menu_play.png","menu_playblurry.png","menu_resume.png", \
 	  "menu_resumeblurry.png",  "menu_quit.png", "menu_quitblurry.png","menu_sound.png", \
-	   "menu_on.png", "menu_off.png","menu_resolution.png","menu_800600.png", "menu_800500.png"      ]
+	   "menu_on.png", "menu_off.png","menu_resolution.png","menu_800600.png", "menu_800500.png", \
+	   "sprite_enemy2.png"      ]
 	
 	for index in xrange (len(sprite_load_list)):
 		 add_sprite(sprite_load_list[index])

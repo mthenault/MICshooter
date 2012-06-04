@@ -17,9 +17,17 @@ class Enemy():
 		
 		#this enemy is a ship
 		if self.typeofship==0:
-			self.sprite_enemy = single_sprites['sprite_enemy.png']
+			if bool(random.getrandbits(1)):
+				self.sprite_enemy = single_sprites['sprite_enemy.png']
+			else:
+				self.sprite_enemy = single_sprites['sprite_enemy2.png']
 			self.sprite_explosion_list = sprite_sequences['sprite_explosion_list.png']
-			self.speed=1
+			self.speed=5
+			
+			#what is the maximum distance with the players ship ?
+			self.distance=random.randrange(1,8)*50
+			#what is the maximum distance before turning ?
+			self.offsetturn=random.randrange(1,9)*50
 		#this enemy is an asteroid
 		else:
 			#load the appropriate sprite
@@ -201,12 +209,33 @@ class Enemy():
 				if (self.typeofship==1):
 					Enemy.nbAsteroids=Enemy.nbAsteroids-1
 			else:
-				if (self.compteurx%120<60):
-					self.x = self.x+2*self.direction
+				
+				#move of a living enemy
+				if self.dying==False and self.typeofship==0:
+					#update the direction in accordance to the ship's position
+					if self.x < ship.position_ship_x and ship.position_ship_x - self.x >self.offsetturn:
+						self.direction=1
+					elif self.x - ship.position_ship_x >self.offsetturn:
+						self.direction=-1
+					#move the enemy
+					#if self.y > ship.position_ship_y -250:
+						#self.y = self.y-20
+					elif self.y < ship.position_ship_y -self.distance :
+						self.y = self.y+5
+						
+					self.x = self.x+10*self.direction
+					
 				else:
-					self.x = self.x-2*self.direction
+					#move of the rest
+					if (self.compteurx%120<60):
+						self.x = self.x+5*self.direction
+					else:
+						self.x = self.x-5*self.direction
+					
+					self.y=self.y+self.speed
+					
 				self.compteurx=self.compteurx+1
-				self.y=self.y+self.speed
+				
 				
 				#only if we are an enemy ship ( not if asteroid)
 				if self.typeofship==0:
