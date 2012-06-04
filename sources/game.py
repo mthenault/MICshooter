@@ -259,7 +259,7 @@ while thegame:
 		 (ship.position_ship_x-64,ship.position_ship_y-64))
 		#fade to red
 		effects.fadeToColor(255, 0, 0)
-	scoreBonus.ProcessBonus(ship)
+	#scoreBonus.ProcessBonus(ship)
 		
 	
 	pygame.display.flip()

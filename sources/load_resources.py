@@ -50,7 +50,7 @@ def load_resources(pygame_arg):
 	 "menu_optionsblurry.png", "menu_play.png","menu_playblurry.png","menu_resume.png", \
 	  "menu_resumeblurry.png",  "menu_quit.png", "menu_quitblurry.png","menu_sound.png", \
 	   "menu_on.png", "menu_off.png","menu_resolution.png","menu_800600.png", "menu_800500.png", \
-	   "sprite_enemy2.png"      ]
+	   "sprite_enemy2.png", "plasmaBonusRing.png", "plasmabonus.png"      ]
 	
 	for index in xrange (len(sprite_load_list)):
 		 add_sprite(sprite_load_list[index])
@@ -62,6 +62,7 @@ def load_resources(pygame_arg):
 	#sprite_explosion_list = sprite_handling.load_sliced_sprites(pygame, 64, 64, "explosion_sheet.png" )
 	add_sprite_sequence("sprite_explosion_list.png", 192, 192)
 	add_sprite_sequence("sprite_explosion_list_asteroid.png", 192, 192)
+	add_sprite_sequence("ship_hurt.png", 192/2, 192/2)
 	prog.update(100)
 	return (sounds, single_sprites, sprite_sequences)
 

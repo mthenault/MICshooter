@@ -21,7 +21,7 @@ class Ship():
 
 		self.life = 100
 		self.hurt=False
-		self.bonus = False
+		self.bonus = 0
 		self.bonustype=0
 		self.countdownBonusLife=0
 		
@@ -70,9 +70,11 @@ class Ship():
 		return (compteur_shoot, laserlist, lasershoot) 
 			
 	def setWeapon (self,  number ):
+		#laser gun
 		if number==1:
 			self.weapon=1
 			self.sprite=self.single_sprites['sprite_ship.png']
+		#plasmagun
 		elif number ==2:
 			self.weapon=2
 			self.sprite=self.single_sprites['sprite_ship_weapon2.png']
@@ -116,7 +118,8 @@ class Ship():
 			self.armor = self.armor+10
 		self.bonus=True
 		self.bonustype=1
-		self.countdownBonusLife=0		
+		self.countdownBonusLife=0	
+			
 		
 	def processHurt(self,countdown):
 		if self.hurt == True and countdown > 30:
@@ -176,8 +179,10 @@ class Ship():
 			if compteur%2==0:
 				if self.bonustype==0:
 					screen.blit(self.single_sprites['lifeBonusRing.png'],(self.position_ship_x,self.position_ship_y))
-				else:
+				elif self.bonustype==1:
 					screen.blit(self.single_sprites['armorBonusRing.png'],(self.position_ship_x,self.position_ship_y))
+				else:
+					screen.blit(self.single_sprites['plasmaBonusRing.png'],(self.position_ship_x,self.position_ship_y))
 		elif self.hurt:
 			if compteur%2==0:
 				screen.blit(self.single_sprites['sprite_ship_fire.png'],(self.position_ship_x,self.position_ship_y+61))

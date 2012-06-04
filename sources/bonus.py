@@ -27,7 +27,7 @@ class Bonus():
 			self.score=ship.score
 			self.bonuscount=self.bonuscount+1
 		
-		if self.bonusAnim>0:
+		if self.bonusAnim>0 :
 			self.bonusAnim=self.bonusAnim-1
 			#show bonus for the plasma weapon
 			if self.bonusType==0:

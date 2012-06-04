@@ -14,7 +14,7 @@ class Enemy():
 		self.y = y
 		self.single_sprites=single_sprites
 		self.typeofship = typeofship
-		
+		self.sprite_sequences =sprite_sequences
 		#this enemy is a ship
 		if self.typeofship==0:
 			if bool(random.getrandbits(1)):
@@ -47,11 +47,14 @@ class Enemy():
 			#if we are going to be a bonus, what bonus will it be ?
 			#0 : health
 			#1 : armor
-			self.bonusType=bool(random.getrandbits(1))
+			#2 : plasma
+			self.bonusType=random.randint(0,2)
 			if self.bonusType==0:
 				self.sprite_bonus=single_sprites['lifebonus.png']
-			else:
+			elif self.bonusType==1:
 				self.sprite_bonus=single_sprites['armorbonus.png']
+			else:
+				self.sprite_bonus=single_sprites['plasmabonus.png']
 		self.bonus=False
 		
 			
@@ -104,8 +107,10 @@ class Enemy():
 			self.sprite_bonus.get_height()):	
 				if self.bonusType==0:
 					ship.getBonusLife()
-				else:
+				elif self.bonusType==1:
 					ship.getBonusArmor()
+				else:
+					ship.setWeapon(2)
 				self.bonus=False
 				self.dying=False
 				self.alive=False
@@ -185,7 +190,11 @@ class Enemy():
 
 		elif self.alive:
 			#if we are being shot, there is alternate blitting for one second
-			if self.shot>0:
+			if self.shot>0:		
+				#explosion
+				if 30-self.shot<len(self.sprite_sequences['ship_hurt.png']):
+					self.screen.blit(self.sprite_sequences['ship_hurt.png'][30-self.shot], (self.x, self.y+32))
+					
 				self.shot=self.shot-1
 				if self.shot%2:
 					if self.typeofship==0:
