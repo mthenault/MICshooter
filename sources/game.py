@@ -161,19 +161,38 @@ while thegame:
 			#lasershoot = 7
 	if pygame.key.get_pressed()[K_ESCAPE]:
 		#launch menu with resume option
-		menu.launch(1) 
-					
+		menu.launch(1) 				
 	if pygame.key.get_pressed()[K_LEFT]:
-		ship.currentspeed_x = ship.currentspeed_x -1 
-
-	if pygame.key.get_pressed()[K_LEFT]:
-		ship.currentspeed_x = ship.currentspeed_x -1 
+		#if ship.currentspeed_x>0 and ship.currentspeed_x <5
+		#ship.currentspeed_x = ship.currentspeed_x -1 
+		if ship.currentspeed_x >=0:
+			ship.currentspeed_x = -5
+		if ship.currentspeed_x > -20:
+			ship.currentspeed_x = ship.currentspeed_x -1
+		
 	elif pygame.key.get_pressed()[K_RIGHT]:
-		ship.currentspeed_x = ship.currentspeed_x +1 		
+		if ship.currentspeed_x <= 0:
+			ship.currentspeed_x = 5
+		if ship.currentspeed_x < 20:
+			ship.currentspeed_x = ship.currentspeed_x +1
+		#ship.currentspeed_x = ship.currentspeed_x +1 		
 	if pygame.key.get_pressed()[K_DOWN]:
-		ship.currentspeed_y = ship.currentspeed_y +1 
+		if ship.currentspeed_y <= 0:
+			ship.currentspeed_y = 5
+		if ship.currentspeed_y < 20:
+			ship.currentspeed_y = ship.currentspeed_y +1
+		#ship.currentspeed_y = ship.currentspeed_y +1 
 	elif pygame.key.get_pressed()[K_UP]:
-		ship.currentspeed_y = ship.currentspeed_y -1 	
+		if ship.currentspeed_y >= 0:
+			ship.currentspeed_y = -5
+		if ship.currentspeed_y > -20:
+			ship.currentspeed_y = ship.currentspeed_y -1
+		#ship.currentspeed_y = ship.currentspeed_y -1 
+	
+	if 	pygame.key.get_pressed()[K_LEFT] ==0 and pygame.key.get_pressed()[K_RIGHT]==0 \
+	and pygame.key.get_pressed()[K_UP] ==0 and pygame.key.get_pressed()[K_DOWN]==0:
+		ship.currentspeed_y=0
+		ship.currentspeed_x=0
 	
 	
 	#are we shooting ?
