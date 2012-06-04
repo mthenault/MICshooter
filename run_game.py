@@ -1,3 +1,3 @@
 #!/usr/bin/env python
-import os
-os.system("python " + os.path.join('sources','game.py'))
+import sources.game
+sources.game.game()
