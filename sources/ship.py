@@ -146,8 +146,8 @@ class Ship():
 			self.position_ship_x = self.position_ship_x + self.currentspeed_x
 		
 		#update de position Y:
-		if self.position_ship_y+self.currentspeed_y>screen.get_height()-self.height:
-			self.position_ship_y = screen.get_height()-self.height
+		if self.position_ship_y+self.currentspeed_y>screen.get_height()-self.height-32:
+			self.position_ship_y = screen.get_height()-self.height-32
 			#reset the speed
 			self.currentspeed_x =0
 			self.currentspeed_y= 0

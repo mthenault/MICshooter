@@ -15,8 +15,13 @@ class Enemy():
 		self.single_sprites=single_sprites
 		self.typeofship = typeofship
 		self.sprite_sequences =sprite_sequences
+		
+	
+		
 		#this enemy is a ship
 		if self.typeofship==0:
+			self.bonusType=random.randint(0,1)
+			
 			if bool(random.getrandbits(1)):
 				self.sprite_enemy = single_sprites['sprite_enemy.png']
 			else:
@@ -30,6 +35,7 @@ class Enemy():
 			self.offsetturn=random.randrange(1,9)*50
 		#this enemy is an asteroid
 		else:
+			self.bonusType=random.randint(0,2)
 			#load the appropriate sprite
 			choix = random.randrange(1,4)
 			size = random.randrange(80, 100)
@@ -43,21 +49,21 @@ class Enemy():
 			Enemy.nbAsteroids=Enemy.nbAsteroids+1
 			self.speed=3	
 			self.sprite_explosion_list = sprite_sequences['sprite_explosion_list_asteroid.png']
-		
-			#if we are going to be a bonus, what bonus will it be ?
-			#0 : health
-			#1 : armor
-			#2 : plasma
-			self.bonusType=random.randint(0,2)
-			if self.bonusType==0:
-				self.sprite_bonus=single_sprites['lifebonus.png']
-			elif self.bonusType==1:
-				self.sprite_bonus=single_sprites['armorbonus.png']
-			else:
-				self.sprite_bonus=single_sprites['plasmabonus.png']
-		self.bonus=False
-		
 			
+			self.bonusType=random.randint(0,2)
+		
+		#if we are going to be a bonus, what bonus will it be ?
+		#0 : health
+		#1 : armor
+		#2 : plasma
+		
+		if self.bonusType==0:
+			self.sprite_bonus=single_sprites['lifebonus.png']
+		elif self.bonusType==1:
+			self.sprite_bonus=single_sprites['armorbonus.png']
+		else:
+			self.sprite_bonus=single_sprites['plasmabonus.png']
+		self.bonus=False
 		
 		self.alive = True
 		self.dying = False
@@ -72,8 +78,6 @@ class Enemy():
 		
 		self.compteurx=0
 		self.compteury=0
-		
-
 		
 		self.w = self.sprite_enemy.get_width()
 		self.h = self.sprite_enemy.get_height()
@@ -162,7 +166,7 @@ class Enemy():
 						self.dying = True
 						ship.score=ship.score+10
 						self.menu.play_sound(self.sounds['explosion2.wav'])
-						print("dying")
+						#print("dying")
 						Enemy.nbAsteroids=Enemy.nbAsteroids-1
 					oldlasers.append((currentx, currenty, lasertype))
 					
@@ -180,13 +184,15 @@ class Enemy():
 				  self.y-86))
 				self.dying_index = self.dying_index +1
 			else:
-				if (self.typeofship==1):
-					self.bonus=True
-					self.alive = True
+				#asteroid
+				#if (self.typeofship==1):
+				self.bonus=True
+				self.alive = True
 					#Enemy.nbAsteroids=Enemy.nbAsteroids-1
-				else:
-					self.dying = False
-					self.alive = False
+				#enemy ship
+				#else:
+				#	self.dying = False
+				#	self.alive = False
 
 		elif self.alive:
 			#if we are being shot, there is alternate blitting for one second
