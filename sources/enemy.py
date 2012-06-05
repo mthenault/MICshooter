@@ -176,8 +176,8 @@ class Enemy():
 				#/2 for one frame every two ticks
 				#print("blitting", self.dying_index/2)
 				self.screen.blit(self.sprite_explosion_list[(self.dying_index/2)],
-				 (self.x-60,
-				  self.y-60))
+				 (self.x-112,
+				  self.y-86))
 				self.dying_index = self.dying_index +1
 			else:
 				if (self.typeofship==1):
