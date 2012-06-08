@@ -7,7 +7,8 @@ screen= common_pygame.screen
 class Ship():
 	
 	
-	def __init__(self, single_sprites, sounds, menu):
+	def __init__(self, single_sprites, sounds, menu,sprite_sequences ):
+		self.sprite_sequences=sprite_sequences
 		self.menu=menu
 		self.sounds=sounds
 		self.sprite=  single_sprites['sprite_ship.png']
@@ -37,6 +38,9 @@ class Ship():
 		#3: death ray
 		self.ammo=0
 		self.weapon=1
+		
+		self.shootanim=0
+		self.shootplace=0
 		
 	def shoot(self, laserlist, compteur_shoot, laser_width, laser_height, lasershoot):
 	#normal laser
@@ -84,7 +88,7 @@ class Ship():
 			self.sprite=self.single_sprites['sprite_ship_weapon2.png']
 			self.ammo=100
 	
-	def damage (self, amount):
+	def damage (self, amount, place):
 		if self.hurt==False:
 			#if we still have armor available
 			if self.armor>0:
@@ -93,13 +97,19 @@ class Ship():
 				if self.armor<0:
 					self.armor=0
 				self.hurt=True
-				return True
+				#return True
 			#if no more armor, life goes down
 			else:
 				self.menu.play_sound(self.sounds["ouch.wav"])
 				self.life = self.life-amount
 				self.hurt=True
-				return True #damage has been effectively inflicted	
+				#return True #damage has been effectively inflicted	
+			
+			self.shootanim=15
+			self.shootplace=place
+			return True
+			
+
 		return False #there was no damage
 		
 	def getBonusLife(self):
@@ -191,4 +201,8 @@ class Ship():
 		else:
 			screen.blit(self.single_sprites['sprite_ship_fire.png'],(self.position_ship_x,self.position_ship_y+61))
 			screen.blit(self.sprite,(self.position_ship_x,self.position_ship_y))
+		
+		if self.shootanim>0:
+			screen.blit(self.sprite_sequences['ship_hurt.png'][15-self.shootanim], (self.shootplace, self.position_ship_y-32))
+			self.shootanim=self.shootanim-1
 	

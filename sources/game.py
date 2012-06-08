@@ -60,7 +60,7 @@ def game():
 	menu.launch(0)
 
 
-	ship = ship.Ship(single_sprites, sounds, menu )
+	ship = ship.Ship(single_sprites, sounds, menu, sprite_sequences )
 	ship.setWeapon(1)
 
 	ship_top = screen.get_height()-ship.height

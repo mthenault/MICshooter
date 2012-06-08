@@ -125,7 +125,7 @@ class Enemy():
 			if collisions.iscollision(ship.position_ship_x, ship.position_ship_y,
 			 ship.width, ship.height, self.x, self.y, self.sprite_enemy.get_width(),
 			self.sprite_enemy.get_height()):
-				if (ship.damage(10)):
+				if (ship.damage(10, ship.position_ship_x)):
 					self.life = self.life-150
 					if self.life<=0:
 						self.dying=True
@@ -264,18 +264,25 @@ class Enemy():
 					self.lasercompteur=self.lasercompteur-1
 					
 					#updating shot lasers
+					tmplist = list()
 					for index in range(len(self.laserlist)):
 						(x, y) = self.laserlist[index]
 						self.laserlist[index]=(x, y+10)
 						self.screen.blit(self.single_sprites['sprite_laser_blue_light.png'],(x-29-32,y-10-22-32))
 						self.screen.blit(self.single_sprites['sprite_laser_blue.png'],(x,y-10))
 						#is the ship getting hit by one of our lasers ?
+						
 						if collisions.iscollision(x, y, 
 						self.single_sprites['sprite_laser_blue.png'].get_width(),
 						self.single_sprites['sprite_laser_blue.png'].get_height(), 
 						ship.position_ship_x, ship.position_ship_y,  ship.width, 
 						ship.height ):
-							ship.damage(10)
+							ship.damage(10, x-40)
+							tmplist.append(self.laserlist[index])
+					
+					#and we delete the old lasers
+					for index in range(len(tmplist)):
+						self.laserlist.remove(tmplist[index])	
 		
 		#if (self.alive==False):
 			#self.timeofdeath=self.timeofdeath+1
