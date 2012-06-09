@@ -177,9 +177,11 @@ class Menu():
 						if self.config['resolution']==0:
 							self.hud.offset=0
 							common_pygame.pygame.display.set_mode((800,600))
+							common_pygame.screenheight=600
 						else:
 							self.hud.offset=100
 							common_pygame.pygame.display.set_mode((800,500))
+							common_pygame.screenheight=500
 						
 				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==3:
 					#write the config into the file

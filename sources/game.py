@@ -88,7 +88,7 @@ def game():
 
 	thegame=True
 	level =0
-
+	spawnedBoss=False
 	while thegame:
 		compteur_shoot=compteur_shoot+1
 		
@@ -112,14 +112,17 @@ def game():
 					enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
 					i*80+190+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand , 0, menu))
 				print (enemy_list[0].nbAsteroids)
-		if level==3:
-			if compteur%(1*60)==0:
+		if level==3 and not spawnedBoss:
+			enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds, 
+			400-single_sprites['boss1.png'].get_width()/2, -single_sprites['boss1.png'].get_height(),1 , 2, menu))
+			spawnedBoss=True
+			#if compteur%(1*60)==0:
 				
-				boolrand = bool(random.getrandbits(1))
-				for i in range(9):
-					enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
-					i*80+80+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand , 0, menu))
-				print (enemy_list[0].nbAsteroids)
+				#boolrand = bool(random.getrandbits(1))
+				#for i in range(9):
+					#enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
+					#i*80+80+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand , 0, menu))
+				#print (enemy_list[0].nbAsteroids)
 				
 		#new asteroids
 		#if ((len(enemy_list)==0) or enemy_list[0].nbAsteroids<=2) and compteur%150==0:

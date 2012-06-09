@@ -132,7 +132,7 @@ class Ship():
 			
 		
 	def processHurt(self,countdown):
-		if self.hurt == True and countdown > 30:
+		if self.hurt == True and countdown > 15:
 			self.hurt=False
 			countdown=0
 		elif self.hurt == True:

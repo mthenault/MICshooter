@@ -17,6 +17,10 @@ class Enemy():
 		self.sprite_sequences =sprite_sequences
 		
 	
+		#enemy types
+		#0 : ship
+		#1 : asteroid
+		#2 : the first boss
 		
 		#this enemy is a ship
 		if self.typeofship==0:
@@ -34,7 +38,7 @@ class Enemy():
 			#what is the maximum distance before turning ?
 			self.offsetturn=random.randrange(1,9)*50
 		#this enemy is an asteroid
-		else:
+		elif self.typeofship==1:
 			self.bonusType=random.randint(0,2)
 			#load the appropriate sprite
 			choix = random.randrange(1,4)
@@ -51,6 +55,22 @@ class Enemy():
 			self.sprite_explosion_list = sprite_sequences['sprite_explosion_list_asteroid.png']
 			
 			self.bonusType=random.randint(0,2)
+		#this enemy is the first boss
+		else:
+			self.bossmove=1
+			self.bossmoveVertical=1
+			self.bossHorizontalSpeed=5
+			self.bonusType=random.randint(0,1)
+			self.speed=5
+			self.sprite_explosion_list = sprite_sequences['sprite_explosion_list.png']
+			self.sprite_enemy = single_sprites['boss1.png']
+			#what is the maximum distance with the players ship ?
+			self.distance=4*50
+			#what is the maximum distance before turning ?
+			self.offsetturn=600
+			self.inPlace=False
+		
+		
 		
 		#if we are going to be a bonus, what bonus will it be ?
 		#0 : health
@@ -212,6 +232,7 @@ class Enemy():
 				self.screen.blit(self.sprite_enemy, (self.x, self.y))
 	
 		if self.bonus:
+			self.y=self.y+5
 			self.screen.blit(self.sprite_bonus, (self.x, self.y))
 			
 			
@@ -240,24 +261,61 @@ class Enemy():
 						
 					self.x = self.x+10*self.direction
 					
-				else:
-					#move of the rest
+				#move of an asteroid
+				elif self.typeofship==1:
+					
 					if (self.compteurx%120<60):
 						self.x = self.x+5*self.direction
 					else:
 						self.x = self.x-5*self.direction
+						self.y=self.y+self.speed
+				
+				#move of the first boss	
+				if self.typeofship==2 :
+					#the first move of the boss before getting into position
+					if not self.inPlace:
+						if self.y>=100:
+							self.inPlace=True
+						else:
+							self.y=self.y+10
+					else:	
+						#we continue to go down till we reach a value
+						if self.y>=150 or self.y <=20:
+							self.bossmoveVertical=- self.bossmoveVertical
+						
+						self.y=self.y+self.bossmoveVertical
 					
-					self.y=self.y+self.speed
+						
+					#we have to move across all the screen, the speed changes on each turn
+					if self.x<=0:
+						self.bossmove=1
+						self.bossHorizontalSpeed=random.randint(4,10)
+					elif self.x>=800-self.w:
+						self.bossmove=-1
+						self.bossHorizontalSpeed=random.randint(4,10)
+					
+					self.x=self.x+self.bossmove*self.bossHorizontalSpeed
+					
+					#if (self.compteurx%200<60):
+						#self.x = self.x+5*self.direction
+					#else:
+						#self.x = self.x-5*self.direction
+					
 					
 				self.compteurx=self.compteurx+1
 				
 				
-				#only if we are an enemy ship ( not if asteroid)
-				if self.typeofship==0:
+				#only if we are an enemy ship ( not if asteroid), and not dying, and not dead 
+				if not self.bonus and not self.dying and ( self.typeofship==0 or self.typeofship==2):
 					#shooting out a laser 
 					if self.lasercompteur==0:
 						self.laserlist.append((self.x+self.w/2, self.y+self.h))
-						self.lasercompteur=60
+						
+						#if we are the boss, shoot out the lasers faster
+						if self.typeofship==2:
+							self.lasercompteur=5
+						else:
+							self.lasercompteur=60
 						self.menu.play_sound(self.sounds["laser4.wav"])
 						
 					#print(self.lasercompteur)
@@ -283,6 +341,16 @@ class Enemy():
 					#and we delete the old lasers
 					for index in range(len(tmplist)):
 						self.laserlist.remove(tmplist[index])	
+				
+				#if we are the boss : shooting out lasers
+				#if self.typeofship==2:
+		
+		
+		
+		
+		
+		
+		
 		
 		#if (self.alive==False):
 			#self.timeofdeath=self.timeofdeath+1
