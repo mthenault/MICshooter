@@ -1,6 +1,8 @@
 import common_pygame
 import collisions
 import random
+import hud
+
 pygame = common_pygame.pygame
 
 class Enemy():
@@ -40,6 +42,7 @@ class Enemy():
 			self.life = 100
 		#this enemy is an asteroid
 		elif self.typeofship==1:
+			self.life = 100
 			self.bonusType=random.randint(0,2)
 			#load the appropriate sprite
 			choix = random.randrange(1,4)
@@ -70,7 +73,7 @@ class Enemy():
 			#what is the maximum distance before turning ?
 			self.offsetturn=600
 			self.inPlace=False
-			self.life=1000
+			self.life=3000
 		
 		
 		
@@ -171,11 +174,18 @@ class Enemy():
 			#check if we are being shot by a laser
 			for index in range(len(laserlist)):
 				(currentx, currenty, lasertype) = laserlist[index]
-				if currenty > self.y - self.sprite_enemy.get_height() and \
-				currenty < self.y and \
-				currentx > self.x and currentx < self.x + self.sprite_enemy.get_width():
+				#if currenty > self.y - self.sprite_enemy.get_height() and \
+				#currenty < self.y and \
+				#currentx > self.x and currentx < self.x + self.sprite_enemy.get_width():
+				if lasertype==1:
+					(laserX, laserY) = (5, 19)
+				else:
+					(laserX, laserY) = (12, 12)
+					
+				if collisions.iscollision(currentx, currenty, laserX, laserY, self.x, \
+				 self.y, self.sprite_enemy.get_width(), self.sprite_enemy.get_height()):
 					#enemy ship
-					if self.typeofship==0 or self.typeofship==2:
+					if self.typeofship==0:
 						self.life=self.life-50
 						if self.life<=0:
 							self.dying=True
@@ -191,16 +201,16 @@ class Enemy():
 						self.menu.play_sound(self.sounds['explosion2.wav'])
 						#print("dying")
 						Enemy.nbAsteroids=Enemy.nbAsteroids-1
-					##first boss
-					#else:
-						#self.life=self.life-50
-						#if self.life<=0:
-							#self.dying=True
-							#ship.score=ship.score+10
-							#self.menu.play_sound(self.sounds['explosion.wav'])
-						#else:
-							#self.shot=30
-							#self.menu.play_sound(self.sounds["shield1.wav"])
+					#first boss
+					else:
+						self.life=self.life-10
+						if self.life<=0:
+							self.dying=True
+							ship.score=ship.score+10
+							self.menu.play_sound(self.sounds['explosion.wav'])
+						else:
+							self.shot=30
+							self.menu.play_sound(self.sounds["shield1.wav"])
 						
 					oldlasers.append((currentx, currenty, lasertype))
 					
@@ -240,6 +250,9 @@ class Enemy():
 					if self.typeofship==0:
 						self.screen.blit(self.single_sprites['sprite_enemy_fire.png'], (self.x, self.y-15))
 					self.screen.blit(self.sprite_enemy, (self.x, self.y))
+				##if we are the first boss, we draw the sprite anyway
+				#if self.typeofship==2:
+					#self.screen.blit(self.sprite_enemy, (self.x, self.y))
 			else:
 				if self.typeofship==0:
 					self.screen.blit(self.single_sprites['sprite_enemy_fire.png'], (self.x, self.y-15))
@@ -358,7 +371,9 @@ class Enemy():
 				
 				#if we are the boss : shooting out lasers
 				#if self.typeofship==2:
-		
+		#if we are the first boss, we print the progress bar
+		if self.typeofship==2:
+			hud.updateProgbar(self.life/30,10, 10,400, (255,0,0))
 		
 		
 		
