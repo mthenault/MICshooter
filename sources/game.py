@@ -87,7 +87,7 @@ def game():
 
 
 	thegame=True
-	level =0
+	level =2
 	spawnedBoss=False
 	while thegame:
 		compteur_shoot=compteur_shoot+1

@@ -37,6 +37,7 @@ class Enemy():
 			self.distance=random.randrange(1,8)*50
 			#what is the maximum distance before turning ?
 			self.offsetturn=random.randrange(1,9)*50
+			self.life = 100
 		#this enemy is an asteroid
 		elif self.typeofship==1:
 			self.bonusType=random.randint(0,2)
@@ -69,6 +70,7 @@ class Enemy():
 			#what is the maximum distance before turning ?
 			self.offsetturn=600
 			self.inPlace=False
+			self.life=1000
 		
 		
 		
@@ -90,7 +92,7 @@ class Enemy():
 		self.dying_index=0
 		self.screen = common_pygame.screen
 		self.sounds= sounds
-		self.life = 100
+		
 		if movementdirection == 0:
 			self.direction=1
 		else:
@@ -173,7 +175,7 @@ class Enemy():
 				currenty < self.y and \
 				currentx > self.x and currentx < self.x + self.sprite_enemy.get_width():
 					#enemy ship
-					if self.typeofship==0:
+					if self.typeofship==0 or self.typeofship==2:
 						self.life=self.life-50
 						if self.life<=0:
 							self.dying=True
@@ -182,12 +184,24 @@ class Enemy():
 						else:
 							self.shot=30
 							self.menu.play_sound(self.sounds["shield1.wav"])
-					else:
+					#asteroid
+					elif self.typeofship==1:
 						self.dying = True
 						ship.score=ship.score+10
 						self.menu.play_sound(self.sounds['explosion2.wav'])
 						#print("dying")
 						Enemy.nbAsteroids=Enemy.nbAsteroids-1
+					##first boss
+					#else:
+						#self.life=self.life-50
+						#if self.life<=0:
+							#self.dying=True
+							#ship.score=ship.score+10
+							#self.menu.play_sound(self.sounds['explosion.wav'])
+						#else:
+							#self.shot=30
+							#self.menu.play_sound(self.sounds["shield1.wav"])
+						
 					oldlasers.append((currentx, currenty, lasertype))
 					
 		return oldlasers
