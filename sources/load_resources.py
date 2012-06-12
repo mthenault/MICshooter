@@ -59,7 +59,6 @@ def load_resources(pygame_arg):
 	pygame.display.set_icon(single_sprites["sprite_ship.png"])
 	
 	#loading sprite sequences
-	#sprite_explosion_list = sprite_handling.load_sliced_sprites(pygame, 64, 64, "explosion_sheet.png" )
 	add_sprite_sequence("sprite_explosion_list.png", 204, 256)
 	add_sprite_sequence("sprite_explosion_list_asteroid.png", 192, 192)
 	add_sprite_sequence("ship_hurt.png", 192/2, 192/2)
