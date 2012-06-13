@@ -12,6 +12,7 @@ def game():
 	import bonus
 	import menu
 	import effects
+	import particles
 
 	pygame = common_pygame.pygame
 	screen= common_pygame.screen
@@ -264,7 +265,7 @@ def game():
 			#fade to red
 			effects.fadeToColor(255, 0, 0)
 		#scoreBonus.ProcessBonus(ship)
-			
+		particles.blitAndUpdate()
 		
 		pygame.display.flip()
 
