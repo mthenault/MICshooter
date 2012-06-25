@@ -28,12 +28,15 @@ class Menu():
 			"sound" : 1,
 			"resolution" : 0}
 		
-		
 		if self.config['resolution']==0:
 			common_pygame.pygame.display.set_mode((800,600))
+			common_pygame.screenheight=600
 		else:
 			common_pygame.pygame.display.set_mode((800,500))
-	
+			common_pygame.screenheight=500
+        
+      #  self.menustatus=0
+
 	def init2(self, single_sprites, sounds, background, hud):
 		self.single_sprites=single_sprites
 		self.sounds=sounds
@@ -46,14 +49,14 @@ class Menu():
 		self.compteur=31
 		#0: main menu
 		#1: option menu
-		self.menuStatus=0
+		self.menustatus=0
 		self.font = pygame.font.Font(None,32)
-		#self.config={}
+        #self.config={}
 		self.hud=hud
-		if self.config['resolution']==0:
-			self.hud.offset=0
-		else:
-			self.hud.offset=100
+	#	if self.config['resolution']==0:
+	#		self.hud.offset=0
+	#	else:
+	#		self.hud.offset=100
 		
 
 								
@@ -107,7 +110,7 @@ class Menu():
 			
 			
 			
-			if self.menuStatus==0:
+			if self.menustatus==0:
 				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==1 and self.compteur>=5:
 						self.compteur=0
 						effects.fadeToColor(0, 0, 0)
@@ -120,7 +123,7 @@ class Menu():
 				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==2 and self.compteur>=5:
 						self.compteur=0
 						self.selection=1
-						self.menuStatus=1
+						self.menustatus=1
 				#print the menu accordingly to the selection and the menu state
 										
 						
@@ -163,7 +166,7 @@ class Menu():
 				else:
 					screen.blit(self.single_sprites['menu_quit.png'],(270-decalx,200+(2*space)-decaly))
 	
-			elif self.menuStatus==1:
+			elif self.menustatus==1:
 
 				if (pygame.key.get_pressed()[pygame.K_LEFT] or pygame.key.get_pressed()[pygame.K_RIGHT]) \
 				and self.selection==1 and self.compteur>=5:
@@ -191,7 +194,7 @@ class Menu():
 						
 						self.compteur=0
 						self.selection=1
-						self.menuStatus=0
+						self.menustatus=0
 				
 				
 				if self.config['sound']:
@@ -223,7 +226,7 @@ class Menu():
 					screen.blit(self.font.render("go back", True, (255,255, 255)),(350,300))
 					
 				if pygame.key.get_pressed()[K_ESCAPE]:
-					self.menuStatus=0
+					self.menustatus=0
 	
 			pygame.display.flip()
 	

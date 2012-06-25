@@ -10,4 +10,4 @@ pygame.mixer.set_num_channels(32)
 pygame.display.set_caption("MICshooter")
 
 screenwidth=screen.get_width()
-screenheight=screen.get_width()
+screenheight=screen.get_height()
