@@ -378,7 +378,7 @@ class Enemy():
 				#if self.typeofship==2:
 		#if we are the first boss, we print the progress bar
 		if self.typeofship==2:
-			hud.updateProgbar(self.life/30,10, 10,400, (255,0,0), 1)
+			hud.updateProgbar(self.life/30,10, 10,400, (255,0,0), 1, self.single_sprites)
 		
 		
 		

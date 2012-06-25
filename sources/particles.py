@@ -11,11 +11,11 @@ explosions = list()
 #size : 1 : asteroids, 2: ships, 3: boss
 def addExplosion ( x, y, size):
 	if size==1:
-		nbParticles =  random.randrange(50, 100)
+		nbParticles =  random.randrange(50, 70)
 	if size==2:
-		nbParticles =  random.randrange(150, 250)
+		nbParticles =  random.randrange(150, 180)
 	if size==3:
-		nbParticles =  random.randrange(250, 550)
+		nbParticles =  random.randrange(200, 300)
 	
 	particleList=list()
 	
@@ -38,7 +38,7 @@ def addExplosion ( x, y, size):
 
 def determine(k):
 	(x, y, directionx, directiony, time, size, sprite) = k
-	if time > 60:
+	if time > 30:
 		return False
 	return True
 
