@@ -13,24 +13,29 @@ screen= common_pygame.screen
 		##self.font = pygame.font.Font(None,64)
 		
 		#self.textHeight=self.y1-80
+def negtozero ( x):
+	if x<0:
+		return 0
+	return x
 	
-def	updateProgbar(percent,x1,  y1,max_width, color, direction):
+def	updateProgbar(percent,x1,  y1,max_width, color, direction, single_sprites):
 	s = pygame.Surface((max_width,15))  # the size of your rect
 	s.set_alpha(64)                # alpha level
 	s.fill(color)           # this fills the entire surface
 	screen.blit(s, (x1,y1))    # (0,0) are the top-left coordinates
-
-	#s = pygame.Surface(((percent*max_width)/100,15))  # the size of your rect
-	#s.set_alpha(128)                # alpha level
-	#s.fill(color2)           # this fills the entire surface
-	#screen.blit(s, (x1,y1))     # (0,0) are the top-left coordinates
 	
 	##txtpercent = self.font.render(str(percent)+"%", True, self.color)
 	##screen.blit(txtpercent, (20,y1+30))
+	(r, g, b) = color
 	if direction==1:
-		pygame.draw.rect(screen, color, (x1,y1,(percent*max_width)/100,15), 0)
+		for i in range((percent*max_width)/100):
+			screen.blit(single_sprites['barArmor.png'],(x1+i,y1))
+		#	pygame.draw.rect(screen, newcol, (x1,y1+i,(percent*max_width)/100,2), 0)
+			
 	else:
-		pygame.draw.rect(screen, color, (x1+(max_width-(percent*max_width)/100),y1,(percent*max_width)/100,15), 0)
+		for i in range((percent*max_width)/100):
+			screen.blit(single_sprites['barLife.png'],(x1+max_width-i,y1))
+		#pygame.draw.rect(screen, color, (x1+(max_width-(percent*max_width)/100),y1,(percent*max_width)/100,15), 0)
 	#pygame.draw.rect(screen,  color2, (x1,y1,max_width,15), 1 )
 
 
@@ -63,12 +68,12 @@ class Hud():
 		
 		#print(common_pygame.screenheight)	
 		#progress bar for the armor
-		updateProgbar(ship.armor,25,  common_pygame.screenheight-23, 150, (7,200,0), 1)
+		updateProgbar(ship.armor,25,  common_pygame.screenheight-23, 150, (7,200,0), 1, self.single_sprites)
 		screen.blit(self.single_sprites['armorbonus.png'],(0,common_pygame.screenheight-32))
 		
 		#progress bar for the life
 		updateProgbar(ship.life,common_pygame.screenwidth-25-150,
-                common_pygame.screenheight-23, 150, (0,181,200), 0)
+                common_pygame.screenheight-23, 150, (0,181,200), 0, self.single_sprites)
 		screen.blit(self.single_sprites['lifebonus.png'],(common_pygame.screenwidth-25,common_pygame.screenheight-32))		
 		
         

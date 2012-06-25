@@ -6,7 +6,7 @@ screen= common_pygame.screen
 
 class progressBar():
 	def __init__(self):
-		self.color=(0, 0, 255)
+		self.color=(102, 170, 255)
 		self.y1 = screen.get_height()/2
 		self.y2 = self.y1 +20
 		self.max_width=800-40

@@ -51,6 +51,7 @@ class Menu():
 		#1: option menu
 		self.menustatus=0
 		self.font = pygame.font.Font(None,32)
+		self.littlefont = pygame.font.Font(None,25)
         #self.config={}
 		self.hud=hud
 	#	if self.config['resolution']==0:
@@ -111,6 +112,23 @@ class Menu():
 			
 			
 			if self.menustatus==0:
+				
+				#blit the help
+				s = pygame.Surface((300,300))  # the size of your rect
+				s.set_alpha(64)                # alpha level
+				s.fill((255, 255, 255))           # this fills the entire surface
+				screen.blit(s, (25,150))    # (0,0) are the top-left coordinates
+				screen.blit(self.littlefont.render("Use the arrow keys and enter", \
+				True, (255,255, 255)),(30,155))
+				screen.blit(self.littlefont.render("to navigate the menu. ", \
+				True, (255,255, 255)),(30,175))
+				screen.blit(self.littlefont.render("Game controls : ", \
+				True, (255,128, 128)),(30,210))
+				screen.blit(self.littlefont.render("Arrow keys : move your ship ", \
+				True, (255,255, 255)),(30,230))
+				screen.blit(self.littlefont.render("space : fire ", \
+				True, (255,255, 255)),(30,250))
+				
 				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==1 and self.compteur>=5:
 						self.compteur=0
 						effects.fadeToColor(0, 0, 0)
