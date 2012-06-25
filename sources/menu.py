@@ -26,13 +26,20 @@ class Menu():
 		else:
 			self.config = {
 			"sound" : 1,
-			"resolution" : 0}
+			"resolution" : 0,
+			"fullscreen" : 0}
 		
 		if self.config['resolution']==0:
-			common_pygame.pygame.display.set_mode((800,600))
+			if self.config['fullscreen']==0:
+				common_pygame.pygame.display.set_mode((800,600))
+			else:
+				common_pygame.pygame.display.set_mode((800,600), common_pygame.pygame.FULLSCREEN)
 			common_pygame.screenheight=600
 		else:
-			common_pygame.pygame.display.set_mode((800,500))
+			if self.config['fullscreen']==0:
+				common_pygame.pygame.display.set_mode((800,500))
+			else:
+				common_pygame.pygame.display.set_mode((800,500), common_pygame.pygame.FULLSCREEN)
 			common_pygame.screenheight=500
         
       #  self.menustatus=0
@@ -93,25 +100,24 @@ class Menu():
 			self.compteur=self.compteur+1
 
 
-			#change the selection
-			if pygame.key.get_pressed()[pygame.K_UP]:
-				if self.compteur>=5:
-					#print(self.selection)
-					self.selection=self.selection-1
-					if self.selection==0:
-						self.selection=3
-					self.compteur=0
-					
-			if pygame.key.get_pressed()[pygame.K_DOWN] and self.compteur>=5:
-				#print(self.selection)
-				self.selection=self.selection+1
-				if self.selection==4:
-					self.selection=1
-				self.compteur=0
-			
 			
 			
 			if self.menustatus==0:
+				#change the selection
+				if pygame.key.get_pressed()[pygame.K_UP]:
+					if self.compteur>=5:
+						#print(self.selection)
+						self.selection=self.selection-1
+						if self.selection==0:
+							self.selection=3
+						self.compteur=0
+						
+				if pygame.key.get_pressed()[pygame.K_DOWN] and self.compteur>=5:
+					#print(self.selection)
+					self.selection=self.selection+1
+					if self.selection==4:
+						self.selection=1
+					self.compteur=0
 				
 				#blit the help
 				s = pygame.Surface((300,300))  # the size of your rect
@@ -134,6 +140,10 @@ class Menu():
 						effects.fadeToColor(0, 0, 0)
 						return 
 						
+				#if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==3 and self.compteur>=5:
+						#print("YAY")
+						##pygame.display.toggle_fullscreen()
+				
 				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==3 and self.compteur>=5:
 						self.compteur=0
 						exit()
@@ -175,6 +185,13 @@ class Menu():
 				else:
 					screen.blit(self.single_sprites['menu_options.png'],(270-decalx,200+space-decaly))
 				
+				#if self.selection==3:
+					#if self.compteur<30 and self.compteur%2:					
+						#screen.blit(self.single_sprites['lifeBonusLight.png'],(190-33-decalx,180-32+(2*space)-decaly))	
+					#screen.blit(self.single_sprites['sprite_ship.png'],(190-decalx,180+(2*space)-decaly))
+						
+					##	pygame.display.toggle_fullscreen()
+				
 				if self.selection==3:
 					if self.compteur<30 and self.compteur%2:
 						screen.blit(self.single_sprites['lifeBonusLight.png'],(190-33-decalx,180-32+(2*space)-decaly))	
@@ -185,6 +202,22 @@ class Menu():
 					screen.blit(self.single_sprites['menu_quit.png'],(270-decalx,200+(2*space)-decaly))
 	
 			elif self.menustatus==1:
+				#change the selection
+				if pygame.key.get_pressed()[pygame.K_UP]:
+					if self.compteur>=5:
+						#print(self.selection)
+						self.selection=self.selection-1
+						if self.selection==0:
+							self.selection=4
+						self.compteur=0
+						
+				if pygame.key.get_pressed()[pygame.K_DOWN] and self.compteur>=5:
+					#print(self.selection)
+					self.selection=self.selection+1
+					if self.selection==5:
+						self.selection=1
+					self.compteur=0
+
 
 				if (pygame.key.get_pressed()[pygame.K_LEFT] or pygame.key.get_pressed()[pygame.K_RIGHT]) \
 				and self.selection==1 and self.compteur>=5:
@@ -197,14 +230,40 @@ class Menu():
 						self.config['resolution']= not self.config['resolution']
 						if self.config['resolution']==0:
 							self.hud.offset=0
-							common_pygame.pygame.display.set_mode((800,600))
+							if self.config['fullscreen']==0:
+								common_pygame.pygame.display.set_mode((800,600))
+							else:
+								common_pygame.pygame.display.set_mode((800,600), \
+								common_pygame.pygame.FULLSCREEN)
+							
 							common_pygame.screenheight=600
 						else:
 							self.hud.offset=100
-							common_pygame.pygame.display.set_mode((800,500))
+							if self.config['fullscreen']==0:
+								common_pygame.pygame.display.set_mode((800,500))
+							else:
+								common_pygame.pygame.display.set_mode((800,500), \
+								common_pygame.pygame.FULLSCREEN)
 							common_pygame.screenheight=500
 						
-				if pygame.key.get_pressed()[pygame.K_RETURN] and self.selection==3:
+				if (pygame.key.get_pressed()[pygame.K_RETURN]  \
+				or pygame.key.get_pressed()[pygame.K_LEFT] or \
+				 pygame.key.get_pressed()[pygame.K_RIGHT] )and \
+				 self.selection==3:
+					if self.config['resolution']==0:
+						res = (800,600)
+					else:
+						res =(800,500)
+					
+					self.config['fullscreen']= int(not self.config['fullscreen'])
+					if self.config['fullscreen']:
+						common_pygame.pygame.display.set_mode(res, \
+						common_pygame.pygame.FULLSCREEN)
+					else:
+						common_pygame.pygame.display.set_mode(res)
+						#common_pygame.pygame.display.toggle_fullscreen()
+						
+				if pygame.key.get_pressed()[pygame.K_RETURN]  and self.selection==4:
 					#write the config into the file
 					with open(os.path.join('data','config.conf'), 'wb') as fichier:
 						mon_pickler = pickle.Pickler(fichier)
@@ -238,10 +297,21 @@ class Menu():
 					else:
 						screen.blit(self.font.render("Resolution : 800*500", True, (255,255, 255)),(350,250))
 				
-				if self.selection==3:
-					screen.blit(self.font.render("go back", True, (255,0, 0)),(350,300))
+				if self.config['fullscreen']==0:
+					if self.selection==3:
+						screen.blit(self.font.render("Fullscreen : off", True, (255,0, 0)),(350,300))
+					else:
+						screen.blit(self.font.render("Fullscreen : off", True, (255,255, 255)),(350,300))
 				else:
-					screen.blit(self.font.render("go back", True, (255,255, 255)),(350,300))
+					if self.selection==3:
+						screen.blit(self.font.render("Fullscreen : on", True, (255,0, 0)),(350,300))
+					else:
+						screen.blit(self.font.render("Fullscreen : on", True, (255,255, 255)),(350,300))
+				
+				if self.selection==4:
+					screen.blit(self.font.render("go back", True, (255,0, 0)),(350,350))
+				else:
+					screen.blit(self.font.render("go back", True, (255,255, 255)),(350,350))
 					
 				if pygame.key.get_pressed()[K_ESCAPE]:
 					self.menustatus=0
