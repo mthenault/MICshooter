@@ -347,7 +347,7 @@ class Enemy():
 						if self.typeofship==2:
 							self.lasercompteur=5
 						else:
-							self.lasercompteur=60
+							self.lasercompteur=15
 						self.menu.play_sound(self.sounds["laser4.wav"])
 						
 					#print(self.lasercompteur)
