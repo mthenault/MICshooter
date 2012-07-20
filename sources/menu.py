@@ -57,8 +57,8 @@ class Menu():
 		#0: main menu
 		#1: option menu
 		self.menustatus=0
-		self.font = pygame.font.Font(None,32)
-		self.littlefont = pygame.font.Font(None,25)
+		self.font = pygame.font.Font("BITSUMIS.TTF",32)
+		self.littlefont = pygame.font.Font("BITSUMIS.TTF",18)
         #self.config={}
 		self.hud=hud
 	#	if self.config['resolution']==0:
@@ -124,9 +124,9 @@ class Menu():
 				s.set_alpha(64)                # alpha level
 				s.fill((255, 255, 255))           # this fills the entire surface
 				screen.blit(s, (25,150))    # (0,0) are the top-left coordinates
-				screen.blit(self.littlefont.render("Use the arrow keys and enter", \
+				screen.blit(self.littlefont.render("Use the arrow keys and", \
 				True, (255,255, 255)),(30,155))
-				screen.blit(self.littlefont.render("to navigate the menu. ", \
+				screen.blit(self.littlefont.render("enter to navigate the menu. ", \
 				True, (255,255, 255)),(30,175))
 				screen.blit(self.littlefont.render("Game controls : ", \
 				True, (255,128, 128)),(30,210))

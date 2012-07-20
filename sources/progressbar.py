@@ -10,7 +10,7 @@ class progressBar():
 		self.y1 = screen.get_height()/2
 		self.y2 = self.y1 +20
 		self.max_width=800-40
-		self.font = pygame.font.Font(None,64)
+		self.font = pygame.font.Font("BITSUMIS.TTF",64)
 		self.loading = self.font.render("LOADING", True, self.color)
 		self.textHeight=self.y1-80
 	def	update(self,percent):
