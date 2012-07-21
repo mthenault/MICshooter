@@ -41,7 +41,9 @@ def	updateProgbar(percent,x1,  y1,max_width, color, direction, single_sprites):
 
 
 class Hud():
-	def __init__(self, single_sprites):
+	def __init__(self, single_sprites, menu, sounds):
+		self.sounds=sounds
+		self.menu=menu
 		self.single_sprites=single_sprites
 			# Create a font
 		self.tinyfont = pygame.font.Font(None, 16)
@@ -49,9 +51,15 @@ class Hud():
 		self.font2 = pygame.font.Font(None, 150)
 		self.score_label = self.tinyfont.render("score", True, (255,255, 0))
 		self.inf = self.font.render("Inf.", True, (0,130, 255))
+		self.communication = pygame.font.Font("A.TTF",13)
+		self.communicationCall = pygame.font.Font("BITSUMIS.TTF",50)
 		
 		#self.offset=0
-		
+		self.johnsonOffset =0
+		self.textline1 = "Johnson here."
+		self.textline2 = "Your goal today is to destroy"
+		self.textline3 = "every enemy ship. "
+		self.textline4 = "I'm counting on you !"
 	def blit(self, ship, level):
 			# Render the text
 		#life_txt = self.font.render(str(ship.life), True, (255,0, 0))
@@ -89,3 +97,29 @@ class Hud():
 			screen.blit(self.single_sprites['ball1.png'],(5,
                                                  common_pygame.screenheight-55 ))
 			screen.blit(ammo_txt,(25, common_pygame.screenheight-55))
+			
+		#beggining of the game : blit johnson
+		if level==0:
+			if self.johnsonOffset==200:
+				return 1
+			else:
+				self.johnsonOffset=self.johnsonOffset+1
+				
+				if self.johnsonOffset==1:
+					self.menu.play_sound(self.sounds["noise.wav"])
+				#first 30 frames
+				if self.johnsonOffset<30:
+					if self.johnsonOffset%8>4:
+						screen.blit(self.communicationCall.render("Incoming call", True, (255,255,255)),(20, 15))
+				else:
+					screen.blit(self.single_sprites['johnson.png'],(10, 10))
+					if self.johnsonOffset>=30:
+						screen.blit(self.communication.render(self.textline1[:(self.johnsonOffset-30)*len(self.textline1)/30], True, (255,255,128)),(114, 26))
+					#next 60 ones
+					if self.johnsonOffset>=70:
+						screen.blit(self.communication.render(self.textline2[:(self.johnsonOffset-70)*len(self.textline2)/30], True, (255,255, 128)),(114, 44))
+					if self.johnsonOffset>=100:
+						screen.blit(self.communication.render(self.textline3[:(self.johnsonOffset-100)*len(self.textline3)/30], True, (255,255, 128)),(114, 44+18))
+					if self.johnsonOffset>=150:
+						screen.blit(self.communication.render(self.textline4[:(self.johnsonOffset-150)*len(self.textline4)/30], True, (255,255, 128)),(114, 44+18+18))
+		return level

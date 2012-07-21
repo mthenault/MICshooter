@@ -55,7 +55,7 @@ def game():
 
 
 
-	hud= hud.Hud(single_sprites)
+	hud= hud.Hud(single_sprites, menu, sounds)
 	#start the menu
 	menu.init2(single_sprites, sounds, background, hud)
 	menu.launch(0)
@@ -88,7 +88,7 @@ def game():
 
 
 	thegame=True
-	level =0
+	level =-1
 	spawnedBoss=False
 	while thegame:
 		compteur_shoot=compteur_shoot+1
@@ -246,7 +246,7 @@ def game():
 			enemy_list.remove(deadEnemies[index])	
 				
 		#blit the hud		
-		hud.blit(ship, level)
+		level = hud.blit(ship, level)
 				
 		#process ship hurt
 		countdown = ship.processHurt(countdown)

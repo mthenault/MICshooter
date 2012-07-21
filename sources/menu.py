@@ -107,6 +107,7 @@ class Menu():
 				if pygame.key.get_pressed()[pygame.K_UP]:
 					if self.compteur>=5:
 						#print(self.selection)
+						self.play_sound(self.sounds["menu.wav"])
 						self.selection=self.selection-1
 						if self.selection==0:
 							self.selection=3
@@ -114,6 +115,7 @@ class Menu():
 						
 				if pygame.key.get_pressed()[pygame.K_DOWN] and self.compteur>=5:
 					#print(self.selection)
+					self.play_sound(self.sounds["menu.wav"])
 					self.selection=self.selection+1
 					if self.selection==4:
 						self.selection=1
@@ -205,6 +207,7 @@ class Menu():
 				#change the selection
 				if pygame.key.get_pressed()[pygame.K_UP]:
 					if self.compteur>=5:
+						self.play_sound(self.sounds["menu.wav"])
 						#print(self.selection)
 						self.selection=self.selection-1
 						if self.selection==0:
@@ -212,6 +215,7 @@ class Menu():
 						self.compteur=0
 						
 				if pygame.key.get_pressed()[pygame.K_DOWN] and self.compteur>=5:
+					self.play_sound(self.sounds["menu.wav"])
 					#print(self.selection)
 					self.selection=self.selection+1
 					if self.selection==5:
@@ -221,11 +225,13 @@ class Menu():
 
 				if (pygame.key.get_pressed()[pygame.K_LEFT] or pygame.key.get_pressed()[pygame.K_RIGHT]) \
 				and self.selection==1 and self.compteur>=5:
+						self.play_sound(self.sounds["menu.wav"])
 						self.compteur=0
 						self.config['sound']= not self.config['sound']
 						
 				if (pygame.key.get_pressed()[pygame.K_LEFT] or pygame.key.get_pressed()[pygame.K_RIGHT]) \
 				and self.selection==2 and self.compteur>=5:
+						self.play_sound(self.sounds["menu.wav"])
 						self.compteur=0
 						self.config['resolution']= not self.config['resolution']
 						if self.config['resolution']==0:

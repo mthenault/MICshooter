@@ -34,7 +34,7 @@ def load_resources(pygame_arg):
 	prog.update(0)
 	soundlist=["laser.wav", "laser2.wav", "laser3.wav", "laser4.wav","laser5.wav", \
 	 "explosion.wav", "explosion2.wav", "life.wav", "ouch.wav", "loser.wav", "shield1.wav", \
-	 "armor.wav", "plasma1.wav", "plasmagun.wav"]
+	 "armor.wav", "plasma1.wav", "plasmagun.wav", "noise.wav", "menu.wav"]
 	 
 	for index in xrange (len(soundlist)):
 		 add_sound(soundlist[index])
@@ -51,7 +51,8 @@ def load_resources(pygame_arg):
 	  "menu_resumeblurry.png",  "menu_quit.png", "menu_quitblurry.png","menu_sound.png", \
 	   "menu_on.png", "menu_off.png","menu_resolution.png","menu_800600.png", "menu_800500.png", \
 	   "sprite_enemy2.png", "plasmaBonusRing.png", "plasmabonus.png", "boss1.png", \
-	   "particle1.png", "particle2.png", "particle3.png", "particle4.png", "barArmor.png", "barLife.png"       ]
+	   "particle1.png", "particle2.png", "particle3.png", "particle4.png", "barArmor.png", "barLife.png", \
+	   "johnson.png" ]
 	
 	for index in xrange (len(sprite_load_list)):
 		 add_sprite(sprite_load_list[index])
