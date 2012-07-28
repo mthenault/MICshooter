@@ -14,8 +14,8 @@ clock = common_pygame.clock
 class Menu():
 	
 	def play_sound(self, sound):
-		if self.config['sound']:
-			sound.play()
+		sound.set_volume(float(self.config['sound'])/10.0)
+		sound.play()
 		
 	def __init__ (self):
 		self.config={}
@@ -124,7 +124,7 @@ class Menu():
 				#blit the help
 				s = pygame.Surface((300,300))  # the size of your rect
 				s.set_alpha(64)                # alpha level
-				s.fill((255, 255, 255))           # this fills the entire surface
+				s.fill((99, 0, 201))           # this fills the entire surface
 				screen.blit(s, (25,150))    # (0,0) are the top-left coordinates
 				screen.blit(self.littlefont.render("Use the arrow keys and", \
 				True, (255,255, 255)),(30,155))
@@ -222,12 +222,24 @@ class Menu():
 						self.selection=1
 					self.compteur=0
 
-
-				if (pygame.key.get_pressed()[pygame.K_LEFT] or pygame.key.get_pressed()[pygame.K_RIGHT]) \
-				and self.selection==1 and self.compteur>=5:
+				#decrease sound volume
+				if pygame.key.get_pressed()[pygame.K_LEFT] and self.selection==1 and self.compteur>=5 and (self.config['sound']>0):
+					self.play_sound(self.sounds["menu.wav"])
+					self.compteur=0
+					self.config['sound']= self.config['sound'] -1
+				
+				#increase sound volume
+				if pygame.key.get_pressed()[pygame.K_RIGHT] \
+				and self.selection==1 and self.compteur>=5 \
+				and self.config['sound'] < 10:
 						self.play_sound(self.sounds["menu.wav"])
 						self.compteur=0
-						self.config['sound']= not self.config['sound']
+						self.config['sound']= self.config['sound'] +1						
+				#if (pygame.key.get_pressed()[pygame.K_LEFT] or pygame.key.get_pressed()[pygame.K_RIGHT]) \
+				#and self.selection==1 and self.compteur>=5:
+						#self.play_sound(self.sounds["menu.wav"])
+						#self.compteur=0
+						#self.config['sound']= not self.config['sound']
 						
 				if (pygame.key.get_pressed()[pygame.K_LEFT] or pygame.key.get_pressed()[pygame.K_RIGHT]) \
 				and self.selection==2 and self.compteur>=5:
@@ -280,16 +292,39 @@ class Menu():
 						self.menustatus=0
 				
 				
-				if self.config['sound']:
-					if self.selection==1:
-						screen.blit(self.font.render("Sound : on", True, (255,0, 0)),(350,200))
-					else:
-						screen.blit(self.font.render("Sound : on", True, (255,255, 255)),(350,200))
+				bar = pygame.Surface((10,15))  # the size of your rect
+				#bar.set_alpha(64)                # alpha level
+				if self.selection==1:
+					screen.blit(self.font.render("Sound :", True, (255,0, 0)),(350,200))
+					bar.fill((128, 0, 0)) 
 				else:
-					if self.selection==1:
-						screen.blit(self.font.render("Sound : off", True, (255,0, 0)),(350,200))
-					else:
-						screen.blit(self.font.render("Sound : off", True, (255,255, 255)),(350,200))
+					bar.fill((128, 128, 128)) 
+					screen.blit(self.font.render("Sound :", True, (255,255, 255)),(350,200))
+				          # this fills the entire surface
+				#screen.blit(s, (25,150))    # (0,0) are the top-left coordinates
+				for i in range(10):
+					screen.blit(bar, (490+(20*i), 210))
+				if self.selection==1:
+					bar.fill((255, 0, 0)) 
+				else:
+					bar.fill((255, 255, 255)) 
+				for i in range(self.config['sound']):
+					screen.blit(bar, (490+(20*i), 210))
+					
+				#else:
+					
+				
+				
+				#if self.config['sound']:
+					#if self.selection==1:
+						#screen.blit(self.font.render("Sound : on", True, (255,0, 0)),(350,200))
+					#else:
+						#screen.blit(self.font.render("Sound : on", True, (255,255, 255)),(350,200))
+				#else:
+					#if self.selection==1:
+						#screen.blit(self.font.render("Sound : off", True, (255,0, 0)),(350,200))
+					#else:
+						#screen.blit(self.font.render("Sound : off", True, (255,255, 255)),(350,200))
 				
 				
 				if self.config['resolution']==0:

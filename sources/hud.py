@@ -100,7 +100,7 @@ class Hud():
 			
 		#beggining of the game : blit johnson
 		if level==0:
-			if self.johnsonOffset==200:
+			if self.johnsonOffset==230:
 				return 1
 			else:
 				self.johnsonOffset=self.johnsonOffset+1
@@ -111,7 +111,7 @@ class Hud():
 				if self.johnsonOffset<30:
 					if self.johnsonOffset%8>4:
 						screen.blit(self.communicationCall.render("Incoming call", True, (255,255,255)),(20, 15))
-				else:
+				elif self.johnsonOffset<=200:
 					screen.blit(self.single_sprites['johnson.png'],(10, 10))
 					if self.johnsonOffset>=30:
 						screen.blit(self.communication.render(self.textline1[:(self.johnsonOffset-30)*len(self.textline1)/30], True, (255,255,128)),(114, 26))
@@ -122,4 +122,19 @@ class Hud():
 						screen.blit(self.communication.render(self.textline3[:(self.johnsonOffset-100)*len(self.textline3)/30], True, (255,255, 128)),(114, 44+18))
 					if self.johnsonOffset>=150:
 						screen.blit(self.communication.render(self.textline4[:(self.johnsonOffset-150)*len(self.textline4)/30], True, (255,255, 128)),(114, 44+18+18))
+					
+				else:
+					if self.johnsonOffset == 200:
+						self.menu.play_sound(self.sounds["noise.wav"])
+					if self.johnsonOffset%8>4:
+						screen.blit(self.communicationCall.render("Transmission end", True, (255,255,255)),(20, 15))				
 		return level
+		
+		
+		
+		
+		
+		
+		
+		
+		
