@@ -104,7 +104,7 @@ def game():
 				for i in range(1):
 					enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
 					i*80+250+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand , 0, menu))
-				print (enemy_list[0].nbAsteroids)
+				#print (enemy_list[0].nbAsteroids)
 		if level==2:
 			if compteur%(2*60)==0:
 				
@@ -112,7 +112,7 @@ def game():
 				for i in range(6):
 					enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
 					i*80+190+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand , 0, menu))
-				print (enemy_list[0].nbAsteroids)
+				#print (enemy_list[0].nbAsteroids)
 		if level==3 and not spawnedBoss:
 			enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds, 
 			400-single_sprites['boss1.png'].get_width()/2, -single_sprites['boss1.png'].get_height(),1 , 2, menu))

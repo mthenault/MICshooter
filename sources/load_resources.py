@@ -34,7 +34,7 @@ def load_resources(pygame_arg):
 	prog.update(0)
 	soundlist=["laser.wav", "laser2.wav", "laser3.wav", "laser4.wav","laser5.wav", \
 	 "explosion.wav", "explosion2.wav", "life.wav", "ouch.wav", "loser.wav", "shield1.wav", \
-	 "armor.wav", "plasma1.wav", "plasmagun.wav", "noise.wav", "menu.wav"]
+	 "armor.wav", "plasma1.wav", "plasmagun.wav", "noise.wav", "menu.wav", "click.wav"]
 	 
 	for index in xrange (len(soundlist)):
 		 add_sound(soundlist[index])
