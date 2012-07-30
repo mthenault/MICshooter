@@ -3,6 +3,7 @@ import collisions
 import random
 import hud
 import particles
+import smoke 
 pygame = common_pygame.pygame
 
 class Enemy():
@@ -258,6 +259,10 @@ class Enemy():
 				##if we are the first boss, we draw the sprite anyway
 				#if self.typeofship==2:
 					#self.screen.blit(self.sprite_enemy, (self.x, self.y))
+				
+				if self.shot%7==0:
+					smoke.addSmoke(self.x,self.y)
+				
 			else:
 				if self.typeofship==0:
 					self.screen.blit(self.single_sprites['sprite_enemy_fire.png'], (self.x, self.y-15))

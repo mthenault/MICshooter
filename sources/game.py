@@ -13,6 +13,7 @@ def game():
 	import menu
 	import effects
 	import particles
+	import smoke
 
 	pygame = common_pygame.pygame
 	screen= common_pygame.screen
@@ -266,6 +267,7 @@ def game():
 			effects.fadeToColor(255, 0, 0)
 		#scoreBonus.ProcessBonus(ship)
 		particles.blitAndUpdate()
+		smoke.blitAndUpdate()
 		
 		pygame.display.flip()
 

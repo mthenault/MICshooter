@@ -52,7 +52,7 @@ def load_resources(pygame_arg):
 	   "menu_on.png", "menu_off.png","menu_resolution.png","menu_800600.png", "menu_800500.png", \
 	   "sprite_enemy2.png", "plasmaBonusRing.png", "plasmabonus.png", "boss1.png", \
 	   "particle1.png", "particle2.png", "particle3.png", "particle4.png", "barArmor.png", "barLife.png", \
-	   "johnson.png" ]
+	   "johnson.png", "smoke.png" ]
 	
 	for index in xrange (len(sprite_load_list)):
 		 add_sprite(sprite_load_list[index])
