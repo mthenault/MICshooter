@@ -156,10 +156,10 @@ class Enemy():
 					if self.life<=0:
 						self.dying=True
 						if self.typeofship==0:
-							particles.addExplosion(self.x, self.y, 2)
+							#particles.addExplosion(self.x, self.y, 2)
 							self.menu.play_sound(self.sounds['explosion.wav'])
 						else:
-							particles.addExplosion(self.x, self.y, 1)
+							#particles.addExplosion(self.x, self.y, 1)
 							self.menu.play_sound(self.sounds['explosion2.wav'])
 							Enemy.nbAsteroids=Enemy.nbAsteroids-1
 							print("dying")
@@ -193,7 +193,7 @@ class Enemy():
 						if self.life<=0:
 							self.dying=True
 							ship.score=ship.score+10
-							particles.addExplosion(self.x, self.y, 2)
+							#particles.addExplosion(self.x, self.y, 2)
 							self.menu.play_sound(self.sounds['explosion.wav'])
 						else:
 							self.shot=30
@@ -202,7 +202,7 @@ class Enemy():
 					elif self.typeofship==1:
 						self.dying = True
 						ship.score=ship.score+10
-						particles.addExplosion(self.x, self.y, 1)
+						#particles.addExplosion(self.x, self.y, 1)
 						self.menu.play_sound(self.sounds['explosion2.wav'])
 						#print("dying")
 						Enemy.nbAsteroids=Enemy.nbAsteroids-1
@@ -212,7 +212,7 @@ class Enemy():
 						if self.life<=0:
 							self.dying=True
 							ship.score=ship.score+10
-							particles.addExplosion(self.x, self.y, 3)
+							#particles.addExplosion(self.x, self.y, 3)
 							self.menu.play_sound(self.sounds['explosion.wav'])
 						else:
 							self.shot=30
@@ -245,6 +245,10 @@ class Enemy():
 				#	self.alive = False
 
 		elif self.alive:
+			#if we don't have max live, smoke is going out 
+			if self.life!=100 and self.compteurx%5==0:
+				smoke.addSmoke(self.x,self.y, 25)
+			
 			#if we are being shot, there is alternate blitting for one second
 			if self.shot>0:		
 				#explosion
@@ -259,9 +263,6 @@ class Enemy():
 				##if we are the first boss, we draw the sprite anyway
 				#if self.typeofship==2:
 					#self.screen.blit(self.sprite_enemy, (self.x, self.y))
-				
-				if self.shot%7==0:
-					smoke.addSmoke(self.x,self.y)
 				
 			else:
 				if self.typeofship==0:

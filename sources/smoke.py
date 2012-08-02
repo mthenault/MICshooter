@@ -10,9 +10,11 @@ screen= common_pygame.screen
 smokes = list()
 
 #size : 1 : asteroids, 2: ships, 3: boss
-def addSmoke ( x, y):
+def addSmoke ( x, y, size):
 	#appending the smoke particle, and his current life (300
-	smokes.append((x,y,256, 45))
+	#size = random.randint(10,45)
+	#size=45
+	smokes.append((x,y,256, size))
 	
 
 def determine_smoke(k):
@@ -31,12 +33,11 @@ def blitAndUpdate():
 			(x, y, life, size) = smokes[i]
 			life = life -1
 
-			if size > 0 and life%2==0:
+			if size > 0 and life%8==0:
 				size=size-1
-			
 			#print("size", size)
 			toblit =  pygame.transform.scale(single_sprites['smoke.png'],( size, size))
-			screen.blit(toblit, (x-(45-size),y-(45-size)))
+			screen.blit(toblit, (x-(25-size),y-(25-size)))
 			
 			smokes[i]=(x, y, life,size)
 			
