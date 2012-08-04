@@ -207,17 +207,16 @@ class Ship():
 			self.sprite=self.single_sprites['sprite_ship_shooting_plasma.png']
 			screen.blit(self.single_sprites['glow_plasma_shooting.png'], \
 			(self.position_ship_x-54,self.position_ship_y-30))
-		else:
-			self.setRightSprite(self.weapon)
-			
+	
+		
 		self.laser_light =self.laser_light-1
 		if self.laser_light >0:
 			self.sprite=self.single_sprites['sprite_ship_shooting_laser.png']
 			screen.blit(self.single_sprites['glow_laser_shooting.png'], \
 			(self.position_ship_x+14,self.position_ship_y-18))
-		else:
+		
+		if self.laser_light <=0 and self.plasmaball_light <=0:
 			self.setRightSprite(self.weapon)
-			
 			
 		if self.bonus:
 			screen.blit(self.single_sprites['lifeBonusLight.png'],(self.position_ship_x-33,self.position_ship_y-32))
