@@ -300,7 +300,7 @@ class Enemy():
 					self.x = self.x+10*self.direction
 					
 				#move of an asteroid
-				elif self.typeofship==1:
+				elif self.typeofship==1 and not self.dying:
 					
 					if (self.compteurx%120<60):
 						self.x = self.x+5*self.direction
