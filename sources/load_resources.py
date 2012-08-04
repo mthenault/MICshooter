@@ -41,7 +41,7 @@ def load_resources(pygame_arg):
 		 prog.update(index*40/len(soundlist))
 	
 	sprite_load_list=["sprite_ship.png","sprite_ship_fire.png",  "sprite_ship_weapon2.png", \
-	"sprite_laser.png", "sprite_laser_blue.png", "sprite_lasershoot.png","sprite_enemy.png", \
+	"sprite_laser.png", "sprite_laser_blue.png", "sprite_enemy.png", \
 	"sprite_enemy_fire.png", "background.png","backgroundtransp.png", "asteroid1.png", \
 	 "asteroid2.png", "asteroid3.png", "planet1.png", "planet2.png", "planet3.png", \
 	 "lifebonus.png", "armorbonus.png", "lifeBonusRing.png", "armorBonusRing.png", \
@@ -52,7 +52,8 @@ def load_resources(pygame_arg):
 	   "menu_on.png", "menu_off.png","menu_resolution.png","menu_800600.png", "menu_800500.png", \
 	   "sprite_enemy2.png", "plasmaBonusRing.png", "plasmabonus.png", "boss1.png", \
 	   "particle1.png", "particle2.png", "particle3.png", "particle4.png", "barArmor.png", "barLife.png", \
-	   "johnson.png", "smoke.png" ]
+	   "johnson.png", "smoke.png", "sprite_ship_shooting_plasma.png", "glow_plasma_shooting.png", \
+	   "sprite_ship_shooting_laser.png", "glow_laser_shooting.png" ]
 	
 	for index in xrange (len(sprite_load_list)):
 		 add_sprite(sprite_load_list[index])

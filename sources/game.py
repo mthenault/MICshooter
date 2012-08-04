@@ -36,8 +36,8 @@ def game():
 	#sprite proprieties being used later
 	laser_height = single_sprites['sprite_laser.png'].get_height()
 	laser_width = single_sprites['sprite_laser.png'].get_width()
-	lasershoot_width =  single_sprites['sprite_lasershoot.png'].get_width()
-	lasershoot_height =  single_sprites['sprite_lasershoot.png'].get_height()
+	#lasershoot_width =  single_sprites['sprite_lasershoot.png'].get_width()
+	#lasershoot_height =  single_sprites['sprite_lasershoot.png'].get_height()
 
 
 	laserlist = list()
@@ -192,7 +192,7 @@ def game():
 		
 		#are we shooting ?
 		if pygame.key.get_pressed()[K_SPACE]:
-			(compteur_shoot, laserlist, lasershoot) =ship.shoot(laserlist,compteur_shoot, laser_width, laser_height, lasershoot)
+			(compteur_shoot, laserlist) =ship.shoot(laserlist,compteur_shoot, laser_width, laser_height)
 			
 					
 		#update the ships position
@@ -203,10 +203,10 @@ def game():
 		
 		
 		#blit the laser shot fire
-		if lasershoot >= 0 :
-			screen.blit(single_sprites['sprite_lasershoot.png'],(ship.position_ship_x+ship.width/2 -lasershoot_width/2,
-			 ship.position_ship_y ))
-			lasershoot = lasershoot -1
+		#if lasershoot >= 0 :
+			#screen.blit(single_sprites['sprite_lasershoot.png'],(ship.position_ship_x+ship.width/2 -lasershoot_width/2,
+			 #ship.position_ship_y ))
+			#lasershoot = lasershoot -1
 			
 		oldLasers = list()	
 		#blit the lasers

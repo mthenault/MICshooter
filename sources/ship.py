@@ -42,15 +42,19 @@ class Ship():
 		self.shootanim=0
 		self.shootplace=0
 		
-	def shoot(self, laserlist, compteur_shoot, laser_width, laser_height, lasershoot):
+		self.plasmaball_light=0
+		self.laser_light=0
+		
+	def shoot(self, laserlist, compteur_shoot, laser_width, laser_height):
 	#normal laser
 		if compteur_shoot>7 and self.weapon == 1:
 			self.menu.play_sound(self.sounds['laser.wav'])
 			#self.sounds['laser.wav'].play()
 			laserlist.append( (self.position_ship_x+self.width/2 -laser_width/2 ,
 			self.position_ship_y-laser_height, 1))
-			lasershoot = 7
-			compteur_shoot=0	
+			#lasershoot = 7
+			compteur_shoot=0
+			self.laser_light=3	
 		#plasma balls				
 		elif compteur_shoot>2 and self.weapon == 2:
 			self.ammo=self.ammo-1
@@ -66,12 +70,15 @@ class Ship():
 				laserlist.append( (self.position_ship_x+self.width/2 -laser_width/2 +25,
 				self.position_ship_y-laser_height+24, 2))
 			#lasershoot = 7
-			compteur_shoot=0	
+			compteur_shoot=0
+			
+			self.plasmaball_light=3
+			
 		#death ray
 		elif compteur_shoot>2 and self.weapon == 3:
 			self.ammo=self.ammo-1
 			
-		return (compteur_shoot, laserlist, lasershoot) 
+		return (compteur_shoot, laserlist) 
 			
 	def setWeapon (self,  number ):
 		#laser gun
@@ -87,6 +94,17 @@ class Ship():
 			self.weapon=3
 			self.sprite=self.single_sprites['sprite_ship_weapon2.png']
 			self.ammo=100
+	
+	def setRightSprite (self, number):
+		#laser gun
+		if number==1:
+			self.sprite=self.single_sprites['sprite_ship.png']
+		#plasmagun
+		elif number ==2:
+			self.sprite=self.single_sprites['sprite_ship_weapon2.png']
+		else:
+			self.sprite=self.single_sprites['sprite_ship_weapon2.png']
+			
 	
 	def damage (self, amount, place):
 		if self.hurt==False:
@@ -183,6 +201,24 @@ class Ship():
 			
 			
 	def blit(self, compteur):
+				#update the int that helps to know if we blit the lighted sprite or the normal one
+		self.plasmaball_light =self.plasmaball_light-1
+		if self.plasmaball_light >0:
+			self.sprite=self.single_sprites['sprite_ship_shooting_plasma.png']
+			screen.blit(self.single_sprites['glow_plasma_shooting.png'], \
+			(self.position_ship_x-54,self.position_ship_y-30))
+		else:
+			self.setRightSprite(self.weapon)
+			
+		self.laser_light =self.laser_light-1
+		if self.laser_light >0:
+			self.sprite=self.single_sprites['sprite_ship_shooting_laser.png']
+			screen.blit(self.single_sprites['glow_laser_shooting.png'], \
+			(self.position_ship_x+14,self.position_ship_y-18))
+		else:
+			self.setRightSprite(self.weapon)
+			
+			
 		if self.bonus:
 			screen.blit(self.single_sprites['lifeBonusLight.png'],(self.position_ship_x-33,self.position_ship_y-32))
 			screen.blit(self.sprite,(self.position_ship_x,self.position_ship_y))
