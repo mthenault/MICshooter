@@ -363,45 +363,8 @@ class Enemy():
 					#print(self.lasercompteur)
 					self.lasercompteur=self.lasercompteur-1
 					
-					##updating shot lasers
-					#tmplist = list()
-					#for index in range(len(self.laserlist)):
-						#(x, y) = self.laserlist[index]
-						#self.laserlist[index]=(x, y+10)
-						#self.screen.blit(self.single_sprites['sprite_laser_blue_light.png'],(x-29-32,y-10-22-32))
-						#self.screen.blit(self.single_sprites['sprite_laser_blue.png'],(x,y-10))
-						##is the ship getting hit by one of our lasers ?
-						
-						#if collisions.iscollision(x, y, 
-						#self.single_sprites['sprite_laser_blue.png'].get_width(),
-						#self.single_sprites['sprite_laser_blue.png'].get_height(), 
-						#ship.position_ship_x, ship.position_ship_y,  ship.width, 
-						#ship.height ):
-							#ship.damage(10, x-40)
-							#tmplist.append(self.laserlist[index])
-					
-					##and we delete the old lasers
-					#for index in range(len(tmplist)):
-						#self.laserlist.remove(tmplist[index])	
-				
-				#if we are the boss : shooting out lasers
-				#if self.typeofship==2:
 		#if we are the first boss, we print the progress bar
 		if self.typeofship==2:
 			hud.updateProgbar(self.life/30,10, 10,400, (255,0,0), 1, self.single_sprites)
 		
 		
-		
-		
-		
-		
-		
-		#if (self.alive==False):
-			#self.timeofdeath=self.timeofdeath+1
-				
-		
-##functions that are used in the game loop (TODO : put in another file)
-#def reset_speed():
-	#currentspeed_x =0
-	#currentspeed_y= 0
-	#return
