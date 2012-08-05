@@ -15,6 +15,8 @@ def game():
 	import particles
 	import smoke
 	import lasers
+	import input
+	import lib.eztext 
 
 	pygame = common_pygame.pygame
 	screen= common_pygame.screen
@@ -88,7 +90,7 @@ def game():
 	#bonus processing
 	scoreBonus=bonus.Bonus(sounds, menu)
 
-
+	ship.life=0
 
 	thegame=True
 	level =-1
@@ -266,9 +268,14 @@ def game():
 
 		if (ship.life<=0):
 			thegame=False
-			youlost = font2.render("Game over", True, (255,255, 255))
-			presskey = font.render("press any key to quit", True, (255,255, 255))
-			yourscore = font.render("Your score : "+ str(ship.score), True, (255,255, 255))
+			#youlost = font2.render("Game over", True, (255,255, 255))
+			#presskey = font.render("press any key to quit", True, (255,255, 255))
+			#yourscore = font.render("Your score : "+ str(ship.score), True, (255,255, 255))
+			youlost = pygame.font.Font("BITSUMIS.TTF",105).render("Game over", True, (255,255, 255))
+			presskey = pygame.font.Font("BITSUMIS.TTF",23).render("press any key to quit", True, (255,255, 255))
+			yourscore = pygame.font.Font("BITSUMIS.TTF",30).render("Your score : "+ str(ship.score), True, (255,255, 255))
+			
+			yourname = pygame.font.Font("BITSUMIS.TTF",55).render("Your name : ", True, (255,255, 255))
 			
 			#play a the explosion sound
 			menu.play_sound(sounds['explosion2.wav'])
@@ -285,7 +292,13 @@ def game():
 
 	exitloop = True
 	exitcountdown =0
-
+	name = ""
+	car = ""
+	txtbx = lib.eztext.Input(maxlength=45, color=(255,50,50), prompt='Your name: ')
+	txtbx.set_pos( 230,180)
+	txtbx.set_font(pygame.font.Font("BITSUMIS.TTF",30))
+	nametyped = False
+	
 	while exitloop:
 		exitcountdown =exitcountdown+ 1
 		clock.tick_busy_loop(30)
@@ -296,9 +309,26 @@ def game():
 		background.blitPlanets()
 		#show the fog
 		background.blitFog()
-		screen.blit(youlost, (150,50 ))
-		screen.blit(yourscore, (250,180 ))
-		screen.blit(presskey, (300,450 ))
+		screen.blit(youlost, (110,50 ))
+		screen.blit(yourscore, (130,150 ))
+		#screen.blit(yourname, (180,330 ))
+		#screen.blit(pygame.font.Font("BITSUMIS.TTF",55)\
+		#.render(name, True, (255,0, 0)), (300, 330))
+		screen.blit(presskey, (150,450 ))
+		
+		#car = str(input.keyInput())
+		#if isinstance(car, str):
+			#name = name + pygame.key.name(car)
+		#print("name : " + name)
+		#input.keyInput()
+		
+		if not nametyped:
+			# update txtbx
+			txtbx.update(pygame.event.get())
+        
+        # blit txtbx on the sceen
+		txtbx.draw(screen)
+		
 		
 		if exitcountdown==30:
 			menu.play_sound(sounds["loser.wav"])
@@ -307,10 +337,12 @@ def game():
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					sys.exit()
-			if pygame.key.get_pressed()[K_SPACE]:
+			if pygame.key.get_pressed()[K_ESCAPE]:
 				print("exiting")
 				exit()
 				exitloop=False
+			if pygame.key.get_pressed()[K_RETURN]:
+				nametyped = True
 
 		#if pygame.KEYDOWN:
 			#print("exiting")
