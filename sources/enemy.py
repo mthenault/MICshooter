@@ -10,7 +10,9 @@ class Enemy():
 	
 	whentoshoot = 0
 	nbAsteroids = 0
-	def __init__(self, single_sprites, sprite_sequences,sounds, x, y, movementdirection, typeofship, menu):
+	def __init__(self, single_sprites, sprite_sequences,sounds, x, y, \
+	movementdirection, typeofship, menu):
+		
 		self.menu=menu
 		
 		self.x = x
@@ -223,7 +225,7 @@ class Enemy():
 		return oldlasers
 	
 	#blit the correct frame connected with the status
-	def update(self, ship):
+	def update(self, ship, lasers):
 		#if dying, blit the explosion frame
 		if self.dying:
 			if self.dying_index/2<len(self.sprite_explosion_list):
@@ -347,7 +349,9 @@ class Enemy():
 				if not self.bonus and not self.dying and ( self.typeofship==0 or self.typeofship==2):
 					#shooting out a laser 
 					if self.lasercompteur==0:
-						self.laserlist.append((self.x+self.w/2, self.y+self.h))
+						
+						lasers.addLaser(self.x+self.w/2, self.y+self.h)
+						#self.laserlist.append((self.x+self.w/2, self.y+self.h))
 						
 						#if we are the boss, shoot out the lasers faster
 						if self.typeofship==2:
@@ -359,26 +363,26 @@ class Enemy():
 					#print(self.lasercompteur)
 					self.lasercompteur=self.lasercompteur-1
 					
-					#updating shot lasers
-					tmplist = list()
-					for index in range(len(self.laserlist)):
-						(x, y) = self.laserlist[index]
-						self.laserlist[index]=(x, y+10)
-						self.screen.blit(self.single_sprites['sprite_laser_blue_light.png'],(x-29-32,y-10-22-32))
-						self.screen.blit(self.single_sprites['sprite_laser_blue.png'],(x,y-10))
-						#is the ship getting hit by one of our lasers ?
+					##updating shot lasers
+					#tmplist = list()
+					#for index in range(len(self.laserlist)):
+						#(x, y) = self.laserlist[index]
+						#self.laserlist[index]=(x, y+10)
+						#self.screen.blit(self.single_sprites['sprite_laser_blue_light.png'],(x-29-32,y-10-22-32))
+						#self.screen.blit(self.single_sprites['sprite_laser_blue.png'],(x,y-10))
+						##is the ship getting hit by one of our lasers ?
 						
-						if collisions.iscollision(x, y, 
-						self.single_sprites['sprite_laser_blue.png'].get_width(),
-						self.single_sprites['sprite_laser_blue.png'].get_height(), 
-						ship.position_ship_x, ship.position_ship_y,  ship.width, 
-						ship.height ):
-							ship.damage(10, x-40)
-							tmplist.append(self.laserlist[index])
+						#if collisions.iscollision(x, y, 
+						#self.single_sprites['sprite_laser_blue.png'].get_width(),
+						#self.single_sprites['sprite_laser_blue.png'].get_height(), 
+						#ship.position_ship_x, ship.position_ship_y,  ship.width, 
+						#ship.height ):
+							#ship.damage(10, x-40)
+							#tmplist.append(self.laserlist[index])
 					
-					#and we delete the old lasers
-					for index in range(len(tmplist)):
-						self.laserlist.remove(tmplist[index])	
+					##and we delete the old lasers
+					#for index in range(len(tmplist)):
+						#self.laserlist.remove(tmplist[index])	
 				
 				#if we are the boss : shooting out lasers
 				#if self.typeofship==2:

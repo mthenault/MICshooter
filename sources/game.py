@@ -14,6 +14,7 @@ def game():
 	import effects
 	import particles
 	import smoke
+	import lasers
 
 	pygame = common_pygame.pygame
 	screen= common_pygame.screen
@@ -40,6 +41,8 @@ def game():
 	#lasershoot_height =  single_sprites['sprite_lasershoot.png'].get_height()
 
 
+	
+	#the ship's laser list
 	laserlist = list()
 
 	lasershoot = 7
@@ -49,10 +52,6 @@ def game():
 	font2 = pygame.font.Font(None, 150)
 
 	background = background.BackGen(single_sprites)
-
-
-
-
 
 
 
@@ -70,7 +69,10 @@ def game():
 
 	decal_laser_ship_x = (ship.width /2)
 	coord_laser_ship_y = -40
-
+	
+	
+	#the enemy laser system
+	lasers = lasers.Lasers(single_sprites, ship)
 
 	enemy_list = list()
 
@@ -104,7 +106,8 @@ def game():
 				boolrand = bool(random.getrandbits(1))
 				for i in range(1):
 					enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
-					i*80+250+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand , 0, menu))
+					i*80+250+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand \
+					, 0, menu))
 				#print (enemy_list[0].nbAsteroids)
 		if level==2:
 			if compteur%(2*60)==0:
@@ -112,11 +115,13 @@ def game():
 				boolrand = bool(random.getrandbits(1))
 				for i in range(6):
 					enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds,
-					i*80+190+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand , 0, menu))
+					i*80+190+60*int(boolrand), -single_sprites['sprite_enemy.png'].get_height(),boolrand \
+					, 0, menu))
 				#print (enemy_list[0].nbAsteroids)
 		if level==3 and not spawnedBoss:
 			enemy_list.append(enemy.Enemy( single_sprites, sprite_sequences , sounds, 
-			400-single_sprites['boss1.png'].get_width()/2, -single_sprites['boss1.png'].get_height(),1 , 2, menu))
+			400-single_sprites['boss1.png'].get_width()/2, -single_sprites['boss1.png'].get_height(),1 ,\
+			 2, menu))
 			spawnedBoss=True
 			#if compteur%(1*60)==0:
 				
@@ -235,7 +240,7 @@ def game():
 		#blit and process the enemies
 		for index in range(len(enemy_list)):
 			oldLasers=enemy_list[index].processHit(laserlist, ship)
-			enemy_list[index].update(ship)
+			enemy_list[index].update(ship, lasers)
 			if enemy_list[index].alive==False:
 				deadEnemies.append(enemy_list[index])
 				#purge old lasers
@@ -245,6 +250,13 @@ def game():
 		#purge dead enemies
 		for index in range(len(deadEnemies)):
 			enemy_list.remove(deadEnemies[index])	
+		
+		
+		#blit and process the enemy's lasers
+		lasers.update()
+		
+		
+		
 				
 		#blit the hud		
 		level = hud.blit(ship, level)
