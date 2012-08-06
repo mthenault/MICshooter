@@ -17,6 +17,7 @@ def game():
 	import lasers
 	import input
 	import lib.eztext 
+	import scoreboard
 
 	pygame = common_pygame.pygame
 	screen= common_pygame.screen
@@ -89,8 +90,6 @@ def game():
 
 	#bonus processing
 	scoreBonus=bonus.Bonus(sounds, menu)
-
-	ship.life=0
 
 	thegame=True
 	level =-1
@@ -272,7 +271,7 @@ def game():
 			#presskey = font.render("press any key to quit", True, (255,255, 255))
 			#yourscore = font.render("Your score : "+ str(ship.score), True, (255,255, 255))
 			youlost = pygame.font.Font("BITSUMIS.TTF",105).render("Game over", True, (255,255, 255))
-			presskey = pygame.font.Font("BITSUMIS.TTF",23).render("press any key to quit", True, (255,255, 255))
+			presskey = pygame.font.Font("BITSUMIS.TTF",23).render("press escape to quit", True, (255,255, 255))
 			yourscore = pygame.font.Font("BITSUMIS.TTF",30).render("Your score : "+ str(ship.score), True, (255,255, 255))
 			
 			yourname = pygame.font.Font("BITSUMIS.TTF",55).render("Your name : ", True, (255,255, 255))
@@ -298,6 +297,7 @@ def game():
 	txtbx.set_pos( 230,180)
 	txtbx.set_font(pygame.font.Font("BITSUMIS.TTF",30))
 	nametyped = False
+	scoreObj = scoreboard.ScoreBoard()
 	
 	while exitloop:
 		exitcountdown =exitcountdown+ 1
@@ -309,12 +309,12 @@ def game():
 		background.blitPlanets()
 		#show the fog
 		background.blitFog()
-		screen.blit(youlost, (110,50 ))
+		screen.blit(youlost, (110,35 ))
 		screen.blit(yourscore, (130,150 ))
 		#screen.blit(yourname, (180,330 ))
 		#screen.blit(pygame.font.Font("BITSUMIS.TTF",55)\
 		#.render(name, True, (255,0, 0)), (300, 330))
-		screen.blit(presskey, (150,450 ))
+		screen.blit(presskey, (270,520 ))
 		
 		#car = str(input.keyInput())
 		#if isinstance(car, str):
@@ -327,7 +327,14 @@ def game():
 			txtbx.update(pygame.event.get())
         
         # blit txtbx on the sceen
-		txtbx.draw(screen)
+		#if exitcountdown%20>10:
+				#txtbx.draw(screen)
+		
+		if txtbx.hasTyped() ==False:
+			if exitcountdown%20>10:
+				txtbx.draw(screen)
+		elif nametyped == False:
+			txtbx.draw(screen)
 		
 		
 		if exitcountdown==30:
@@ -342,7 +349,14 @@ def game():
 				exit()
 				exitloop=False
 			if pygame.key.get_pressed()[K_RETURN]:
-				nametyped = True
+				if not nametyped:
+					scoreObj.addScore(ship.score, txtbx.getText())
+					nametyped = True
+				
+ 
+		scoreObj.printScore()
+
+				
 
 		#if pygame.KEYDOWN:
 			#print("exiting")

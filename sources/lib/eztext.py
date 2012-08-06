@@ -45,8 +45,16 @@ class Input:
         surface.blit(text, (self.x, self.y))
 
     def getText(self):
-		return self.prompt+self.value
-    
+        return self.value
+
+    def hasTyped(self):
+        if self.value =="":
+            return False
+        else: 
+            return True
+	
+	
+			
     def update(self, events):
         """ Update the input based on passed events """
         for event in events:
