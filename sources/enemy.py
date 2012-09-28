@@ -158,10 +158,12 @@ class Enemy():
 					if self.life<=0:
 						self.dying=True
 						if self.typeofship==0:
-							#particles.addExplosion(self.x, self.y, 2)
+							if common_pygame.explosions ==1:
+								particles.addExplosion(self.x, self.y, 2)
 							self.menu.play_sound(self.sounds['explosion.wav'])
 						else:
-							#particles.addExplosion(self.x, self.y, 1)
+							if common_pygame.explosions ==1:
+								particles.addExplosion(self.x, self.y, 1)
 							self.menu.play_sound(self.sounds['explosion2.wav'])
 							Enemy.nbAsteroids=Enemy.nbAsteroids-1
 							print("dying")
@@ -195,7 +197,8 @@ class Enemy():
 						if self.life<=0:
 							self.dying=True
 							ship.score=ship.score+10
-							#particles.addExplosion(self.x, self.y, 2)
+							if common_pygame.explosions==1:
+								particles.addExplosion(self.x, self.y, 2)
 							self.menu.play_sound(self.sounds['explosion.wav'])
 						else:
 							self.shot=30
@@ -204,7 +207,8 @@ class Enemy():
 					elif self.typeofship==1:
 						self.dying = True
 						ship.score=ship.score+10
-						#particles.addExplosion(self.x, self.y, 1)
+						if common_pygame.explosions==1:
+							particles.addExplosion(self.x, self.y, 1)
 						self.menu.play_sound(self.sounds['explosion2.wav'])
 						#print("dying")
 						Enemy.nbAsteroids=Enemy.nbAsteroids-1
@@ -214,7 +218,8 @@ class Enemy():
 						if self.life<=0:
 							self.dying=True
 							ship.score=ship.score+10
-							#particles.addExplosion(self.x, self.y, 3)
+							if common_pygame.explosions==1:
+								particles.addExplosion(self.x, self.y, 3)
 							self.menu.play_sound(self.sounds['explosion.wav'])
 						else:
 							self.shot=30

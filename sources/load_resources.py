@@ -19,7 +19,7 @@ def add_sprite(spritefile):
 	global single_sprites
 	single_sprites[spritefile]=pygame.image.load(os.path.join('images',spritefile)).convert_alpha()
 	single_sprites[spritefile].set_colorkey((255,0,255))
-	
+
 
 def add_sprite_sequence(spritesequence, h, w):
 	global sprite_sequences 

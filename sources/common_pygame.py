@@ -13,3 +13,5 @@ pygame.display.set_caption("MICshooter")
 screenwidth=screen.get_width()
 screenheight=screen.get_height()
 
+explosions=0
+
