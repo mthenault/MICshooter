@@ -52,11 +52,14 @@ class Enemy():
 			size = random.randrange(80, 100)
 			self.y=-size
 			if choix ==1:
-				self.sprite_enemy = pygame.transform.scale(self.single_sprites['asteroid1.png'], (size , size )).convert_alpha()
+				self.sprite_enemy = pygame.transform.scale(self.single_sprites['asteroid1.png'],
+                    (size , size )).convert_alpha()
 			elif choix==2:
-				self.sprite_enemy = pygame.transform.scale(self.single_sprites['asteroid3.png'], (size , size )).convert_alpha()				
+				self.sprite_enemy = pygame.transform.scale(self.single_sprites['asteroid3.png'],
+                    (size , size )).convert_alpha()
 			else:
-				self.sprite_enemy = pygame.transform.scale(self.single_sprites['asteroid2.png'], (size , size )).convert_alpha()
+				self.sprite_enemy = pygame.transform.scale(self.single_sprites['asteroid2.png'],
+                    (size , size )).convert_alpha()
 			Enemy.nbAsteroids=Enemy.nbAsteroids+1
 			self.speed=3	
 			self.sprite_explosion_list = sprite_sequences['sprite_explosion_list_asteroid.png']
@@ -277,7 +280,8 @@ class Enemy():
 				self.screen.blit(self.sprite_enemy, (self.x, self.y))
 	
 		if self.bonus:
-			self.y=self.y+5
+            #move the bonus in the y axis
+			self.y=self.y+10
 			self.screen.blit(self.sprite_bonus, (self.x, self.y))
 			
 			
