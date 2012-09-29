@@ -28,16 +28,24 @@ def addExplosion ( x, y, size):
 			directiony =random.randrange(-10, 10)
 		
 		whatsprite=random.randrange(1, 5)
-		print (whatsprite)
+		speedspritex=random.randrange(1, 10)
+		speedspritey=random.randrange(1, 10)
+		#print (whatsprite)
 		spritename= "particle" + str(whatsprite) + ".png"
 		sprite = single_sprites[spritename]
 		#x position, y position, directionx, directiony, time, sprite size, sprite
-		particleList.append((x, y, directionx, directiony, 0, sprite.get_width(), sprite ))
+		particleList.append((x, y, directionx, directiony, 0, sprite.get_width(), sprite, speedspritex, speedspritey ))
 	
 	explosions.append(particleList)
 
+
+def addRandomExplosion (size):
+	placeX =  random.randrange(00, 800)
+	placeY =  random.randrange(0, 600)
+	addExplosion ( placeX, placeY, size)
+	
 def determine(k):
-	(x, y, directionx, directiony, time, size, sprite) = k
+	(x, y, directionx, directiony, time, size, sprite, speedspritex, speedspritey) = k
 	if time > 30:
 		return False
 	return True
@@ -48,15 +56,15 @@ def blitAndUpdate():
 		explosions[i][:]=[k for k in explosions[i] if determine(k)]
 		for j in range(len(explosions[i])):
 			#blit the concerned particle
-			(x, y, directionx, directiony, time, size, sprite) = explosions[i][j]
+			(x, y, directionx, directiony, time, size, sprite, speedspritex, speedspritey) = explosions[i][j]
 			if size>0 and time%2 ==0:
 				size=size-1
 			
 			toblit =  pygame.transform.scale(sprite,( size, size))
 			screen.blit(toblit, (x,y))
 			
-			x=x+directionx
-			y=y+directiony
+			x=x+directionx+speedspritex
+			y=y+directiony+speedspritey
 			time=time+1
-			explosions[i][j]=(x, y, directionx, directiony, time, size, sprite)
+			explosions[i][j]=(x, y, directionx, directiony, time, size, sprite,speedspritex, speedspritey )
 			

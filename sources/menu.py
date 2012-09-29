@@ -7,9 +7,12 @@ import pygame, sys, pygame.mixer
 from pygame.locals import *
 import pickle
 import effects
+import particles
+
 pygame = common_pygame.pygame
 screen= common_pygame.screen
 clock = common_pygame.clock
+
 
 class Menu():
 	
@@ -98,7 +101,8 @@ class Menu():
 			screen.blit(self.single_sprites['menu_micshooter.png'],(120,40))
 			
 			self.compteur=self.compteur+1
-
+			#update the particles
+			particles.blitAndUpdate()
 
 			
 			
@@ -106,6 +110,7 @@ class Menu():
 				#change the selection
 				if pygame.key.get_pressed()[pygame.K_UP]:
 					if self.compteur>=5:
+						particles.addRandomExplosion(3)
 						#print(self.selection)
 						self.play_sound(self.sounds["menu.wav"])
 						self.selection=self.selection-1
@@ -114,6 +119,7 @@ class Menu():
 						self.compteur=0
 						
 				if pygame.key.get_pressed()[pygame.K_DOWN] and self.compteur>=5:
+					particles.addRandomExplosion(3)
 					#print(self.selection)
 					self.play_sound(self.sounds["menu.wav"])
 					self.selection=self.selection+1
