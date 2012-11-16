@@ -22,3 +22,10 @@ class progressBar():
 		pygame.draw.rect(screen, self.color, (20,self.y1,self.max_width,20), 2 )
 		pygame.draw.rect(screen, self.color, (20,self.y1,(percent*self.max_width)/100,20), 0)
 		pygame.display.flip()
+
+		(r,g,b)=self.color
+		r=min(r+2,255)
+		g=max(g-2,0)
+		b=max(b-2,0)
+		self.color=(r,g,b)
+		self.loading = self.font.render("LOADING", True, self.color)
